@@ -2,10 +2,18 @@
 //
 
 #include <iostream>
+#include <string>
+
+struct PCB_t
+{
+	std::string state;
+
+};
 
 int main()
 {
     std::cout << "Hello World!\n";
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

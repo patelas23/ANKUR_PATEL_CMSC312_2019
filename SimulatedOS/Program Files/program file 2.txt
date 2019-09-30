@@ -1,0 +1,12 @@
+Name: Text Editor
+Total runtime: 250
+Memory: 20
+
+CALCULATE 50
+I/0 50
+CALCULATE 20
+I/0 45
+CALCULATE 75
+CALCULATE 50
+I/O 20
+EXE
