@@ -1,7 +1,8 @@
 #pragma once
-class scheduler
+class Scheduler
 {
-	int load_from_ready(int* queue, int runtime);
+	static 
+	int LoadFromReady(int* queue, int runtime);
 
 };
 
