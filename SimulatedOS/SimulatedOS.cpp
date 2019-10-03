@@ -13,7 +13,6 @@ int main()
 	string program_name, current_line;
 	ifstream programFile;
 
-
 	cout << "Enter name of program (omitting file extensions)\n";
 	cin >> program_name;
 
@@ -23,8 +22,10 @@ int main()
 	programFile.open("../Program Files/" + program_name + ".txt");
 
 	while (getline(programFile, current_line)) {
-		cout << current_line << '\n';
+		cout << current_line << "\n";
 	}
+
+
 
 	programFile.close();
 
