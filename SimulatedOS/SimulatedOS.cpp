@@ -5,14 +5,6 @@
 #include <fstream>
 #include <string>
 
-struct PCB_t
-{
-	std::string state;
-	std::string name;
-	int pc;
-	int memory;
-};
-
 int main()
 {
 	std::cout << "Enter name of program\n";
@@ -28,10 +20,13 @@ int main()
 	return 0;
 }
 
+// Helper function which uses master program template
+// to randomly generate new job files
 int programGenerator() {
 	std::cout << "Finish implementation";
 	return 0;
 }
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
