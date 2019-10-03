@@ -7,13 +7,24 @@
 
 int main()
 {
-	std::cout << "Enter name of program\n";
+	int num_of_processes;
+	using namespace std;
 
-	std::cout << "Enter number of processes to create\n";
+	string program_name, current_line;
+	ifstream programFile;
 
-	std::ofstream programFile;
-	programFile.open("../Program Files/test.txt");
-	programFile << "Writing to disk in folder\n";
+
+	cout << "Enter name of program (omitting file extensions)\n";
+	cin >> program_name;
+
+	cout << "Enter number of processes to create\n";
+	cin >> num_of_processes;
+
+	programFile.open("../Program Files/" + program_name + ".txt");
+
+	while (getline(programFile, current_line)) {
+		cout << current_line << '\n';
+	}
 
 	programFile.close();
 

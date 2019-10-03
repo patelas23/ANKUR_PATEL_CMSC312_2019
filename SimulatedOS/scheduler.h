@@ -2,11 +2,20 @@
 #include <string>
 class Scheduler
 {
-	struct PCB;
-	static Scheduler* instance;
+const int TOTAL_MEM = 4096;
+
+public:
+	struct pcb {
+		std::string name;
+		std::string state;
+		int pc;
+		int memory;
+	};
 	static int available_memory;
-	int CreateProcess(std::string name, int memory);
-	int LoadFromReady(int* queue, int runtime);
+	Scheduler( void );
+	int createprocess(std::string name, int memory);
+
+	int loadfromready(int* queue, int runtime);
 
 };
 
