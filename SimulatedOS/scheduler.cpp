@@ -4,12 +4,14 @@ Scheduler::Scheduler(void) {
 	//nothin
 }
 
-int Scheduler::createProcess(std::string name, int cycles)
+int Scheduler::createProcess(pcb &newProcess)
 {
 	return 0;
 }
 
-int Scheduler::loadFromReady(int runtime)
+int Scheduler::createProcess(std::string processname, int cycles)
 {
+	pcb* new_process;
 	return 0;
 }
+

@@ -14,6 +14,7 @@ int main()
 	string program_name, current_line;
 	ifstream programFile;
 
+	Scheduler scheduler;
 
 
 	cout << "Enter name of program (omitting file extensions)\n";
@@ -25,14 +26,39 @@ int main()
 
 	programFile.open("../Program Files/" + program_name + ".txt");
 
-	//Read contents of file
-	while (getline(programFile, current_line)) {
+	//Read contents of file line by line
+	/*while (getline(programFile, current_line)) {
 		cout << current_line << "\n";
+
 		cout << i;
 		i++;
+	}*/
+
+	//Read contents of file word-by-word
+	while (programFile >> current_line) {
+		Scheduler::pcb* a;
+		cout << current_line << "\n";
+		if (current_line.compare("Name:") != 0) {
+			programFile >> a->name;
+		}
+		else if (current_line.compare("CALCULATE") != 0) {
+			programFile >> a->time;
+			a->type = "CALCULATE";
+			num_of_processes--;
+		}
+		else if (current_line.compare("I/O") != 0) {
+			programFile >> a->time;
+			a->type = "I/O";
+			num_of_processes--;
+		}
+		else if (current_line.compare("EXE") != 0) {
+			break;
+		}
+		createProcess(a);
 	}
 
 	for (i = 0; i < num_of_processes; i++) {
+		//Create new processes
 
 	}
 
