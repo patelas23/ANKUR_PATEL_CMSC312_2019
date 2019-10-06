@@ -4,25 +4,36 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Scheduler.h"
 
 int main()
 {
-	int num_of_processes;
+	int num_of_processes, i;
 	using namespace std;
 
 	string program_name, current_line;
 	ifstream programFile;
+
+
 
 	cout << "Enter name of program (omitting file extensions)\n";
 	cin >> program_name;
 
 	cout << "Enter number of processes to create\n";
 	cin >> num_of_processes;
+	i = 0;
 
 	programFile.open("../Program Files/" + program_name + ".txt");
 
+	//Read contents of file
 	while (getline(programFile, current_line)) {
 		cout << current_line << "\n";
+		cout << i;
+		i++;
+	}
+
+	for (i = 0; i < num_of_processes; i++) {
+
 	}
 
 
@@ -35,7 +46,33 @@ int main()
 // Helper function which uses master program template
 // to randomly generate new job files
 int programGenerator() {
-	std::cout << "Finish implementation";
+	std::ifstream newFile;
+	int calculate, io, j;
+	std::string name;
+
+	std::cout << "Enter name of new program: \n";
+	std::cin >> name;
+
+	std::cout << "Enter number of CPU processes to populate: \n";
+	std::cin >> calculate;
+
+	std::cout << "Enter number of I/O processes to populate: \n";
+	std::cin >> io;
+
+	return 0;
+}
+
+int processGenerator() {
+
+	return 0;
+}
+
+int generateProcess() {
+	return 0;
+}
+
+int createProcess(std::string name, int cycles) {
+	
 	return 0;
 }
 

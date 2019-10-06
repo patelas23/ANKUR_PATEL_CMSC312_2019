@@ -151,10 +151,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dispatcher.cpp" />
     <ClCompile Include="scheduler.cpp" />
     <ClCompile Include="SimulatedOS.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="scheduler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
