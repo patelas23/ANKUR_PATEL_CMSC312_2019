@@ -1,21 +1,26 @@
 #pragma once
 #include <string>
+#include <queue>
 class Scheduler
 {
-const int TOTAL_MEM = 4096;
-
+	const int TOTAL_MEM = 4096;
 public:
 	struct pcb {
-		std::string name;
-		std::string state;
-		int pc;
-		int memory;
+		std::string name, state, type;
+		int pc, memory, time;
+		
 	};
 	static int available_memory;
+
 	Scheduler( void );
-	int createprocess(std::string name, int memory);
+	int createProcess(pcb &newProcess);
+	//int createProcess(std::string name, int cycles);
 
-	int loadfromready(int* queue, int runtime);
+	int addProcess(pcb  &newProcess);
 
+private:
+	std::queue <pcb> jobQueue;
+	std::queue <pcb> readyQueue;
+	std::queue <pcb> deviceQueue;
 };
 

@@ -18,7 +18,6 @@ int main()
 
 
 	cout << "Enter name of program (omitting file extensions)\n";
-	cout << "browser \n file_explorer \n media_player \n text_editor \n";
 	cin >> program_name;
 
 	cout << "Enter number of processes to create\n";
@@ -27,11 +26,19 @@ int main()
 
 	programFile.open("../Program Files/" + program_name + ".txt");
 
+	//Read contents of file line by line
+	/*while (getline(programFile, current_line)) {
+		cout << current_line << "\n";
+
+		cout << i;
+		i++;
+	}*/
+
 	//Read contents of file word-by-word
 	while (programFile >> current_line) {
 		Scheduler::pcb* a = {};
 		cout << current_line << "\n";
-		if (current_line.compare("Name: ") != 0) {
+		if (current_line.compare("Name:") != 0) {
 			programFile >> a->name;
 		}
 		else if (current_line.compare("CALCULATE") != 0) {
@@ -47,7 +54,7 @@ int main()
 		else if (current_line.compare("EXE") != 0) {
 			break;
 		}
-		scheduler.addProcess(a);
+		scheduler.addProcess(*a);
 	}
 
 	for (i = 0; i < num_of_processes; i++) {
