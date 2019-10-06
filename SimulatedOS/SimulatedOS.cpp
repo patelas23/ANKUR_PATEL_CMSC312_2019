@@ -8,8 +8,9 @@
 
 int main()
 {
-	int num_of_processes, i;
 	using namespace std;
+
+	int num_of_processes, i = 0;
 
 	string program_name, current_line;
 	ifstream programFile;
@@ -29,7 +30,7 @@ int main()
 
 	//Read contents of file word-by-word
 	while (programFile >> current_line) {
-		Scheduler::pcb* a = {};
+		Scheduler::pcb *a;
 		cout << current_line << "\n";
 		if (current_line.compare("Name: ") != 0) {
 			programFile >> a->name;

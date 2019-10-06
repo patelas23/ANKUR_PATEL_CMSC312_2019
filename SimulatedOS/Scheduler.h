@@ -13,10 +13,8 @@ public:
 	static int available_memory;
 
 	Scheduler( void );
-	int createProcess(pcb &newProcess);
-	//int createProcess(std::string name, int cycles);
-
-	int addProcess(pcb  &newProcess);
+	int createProcess(std::string name, int cycles, int memory);
+	int addProcess(pcb  newProcess);
 
 private:
 	std::queue <pcb> jobQueue;
