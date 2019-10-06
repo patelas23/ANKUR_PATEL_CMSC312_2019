@@ -17,7 +17,6 @@ int main()
 
 	Scheduler scheduler;
 
-
 	cout << "Enter name of program (omitting file extensions)\n";
 	cout << "browser \n file_explorer \n media_player \n text_editor \n";
 	cin >> program_name;
@@ -30,7 +29,7 @@ int main()
 
 	//Read contents of file word-by-word
 	while (programFile >> current_line) {
-		Scheduler::pcb *a;
+		Scheduler::pcb* a;
 		cout << current_line << "\n";
 		if (current_line.compare("Name: ") != 0) {
 			programFile >> a->name;
@@ -53,10 +52,7 @@ int main()
 
 	for (i = 0; i < num_of_processes; i++) {
 		//Create new processes
-
 	}
-
-
 
 	programFile.close();
 
@@ -83,7 +79,6 @@ int programGenerator() {
 }
 
 int processGenerator() {
-
 	return 0;
 }
 
@@ -92,15 +87,13 @@ int generateProcess() {
 }
 
 int createProcess(std::string name, int cycles) {
-	
 	return 0;
 }
-
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
+// Tips for Getting Started:
 //   1. Use the Solution Explorer window to add/manage files
 //   2. Use the Team Explorer window to connect to source control
 //   3. Use the Output window to see build output and other messages

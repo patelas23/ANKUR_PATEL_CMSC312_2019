@@ -1,17 +1,16 @@
 #include "scheduler.h"
+#include <iostream>
 
 Scheduler::Scheduler(void) {
 	//nothin
 }
 
-int Scheduler::createProcess(pcb &newProcess)
+int Scheduler::createProcess(std::string name, int cycles, int memory)
 {
 	return 0;
 }
 
-int Scheduler::createProcess(std::string processname, int cycles)
-{
-	pcb* new_process;
+int Scheduler::addProcess(pcb newProcess) {
+	std::cout << "Successfully called addprocess on " << newProcess.name;
 	return 0;
 }
-
