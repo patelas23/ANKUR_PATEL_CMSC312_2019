@@ -16,9 +16,7 @@ public:
 	int createProcess(pcb &newProcess);
 	//int createProcess(std::string name, int cycles);
 
-	int addProcess( void );
-	int loadProcess(void);
-	pcb loadFromReady( void );
+	int addProcess(pcb  &newProcess);
 
 private:
 	std::queue <pcb> jobQueue;

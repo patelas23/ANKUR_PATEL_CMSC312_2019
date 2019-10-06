@@ -54,7 +54,7 @@ int main()
 		else if (current_line.compare("EXE") != 0) {
 			break;
 		}
-		createProcess(a);
+		scheduler::addProcess(a);
 	}
 
 	for (i = 0; i < num_of_processes; i++) {
