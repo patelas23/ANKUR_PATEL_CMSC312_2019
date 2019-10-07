@@ -1,11 +1,13 @@
 // SimulatedOS.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include "Scheduler.h"
 #include "Dispatcher.h"
+#include "SimulatedOS.h"
 
 struct ProgramTemplate {
 	std::string name;
@@ -17,8 +19,9 @@ int main()
 	using namespace std;
 
 	int num_of_processes, i = 0;
+	int process_memory, cycles;
 
-	string program_name, current_line, process_name;
+	string program_name, current_line, process_name, process_type;
 	ifstream programFile;
 
 	Scheduler scheduler;
@@ -40,24 +43,17 @@ int main()
 	programFile.open("../Program Files/" + program_name + ".txt");
 
 	//Read contents of file word-by-word
-	while (programFile >> current_line) {
-		cout << current_line << "\n";
-		/*if (current_line.compare("Name: ") != 0) {
-			programFile >> a->name;
+	while (programFile >> current_line && current_line != "EXE") {
+		if (current_line.compare("Name:") != 0) {
+			programFile >> process_name;
 		}
-		else if (current_line.compare("CALCULATE") != 0) {
-			programFile >> a->time;
-			a->type = "CALCULATE";
-			num_of_processes--;
+		else if (current_line.compare("Memory:") != 0) {
+			programFile >> process_memory;
 		}
-		else if (current_line.compare("I/O") != 0) {
-			programFile >> a->time;
-			a->type = "I/O";
-			num_of_processes--;
+		else {
+			process_type = (current_line.substr(0, current_line.find(":")));
+			programFile >> cycles;
 		}
-		else if (current_line.compare("EXE") != 0) {
-			break;
-		}*/
 	}
 
 	for (i = 0; i < num_of_processes; i++) {
@@ -73,7 +69,7 @@ int main()
 // to randomly generate new job files
 int programGenerator() {
 	std::ofstream newFile;
-	int calculate, io, j;
+	int calculate, io, j, cycles;
 	std::string name;
 
 	std::cout << "Enter name of new program : \n";
@@ -87,20 +83,20 @@ int programGenerator() {
 	std::cout << "Enter number of I/O processes to populate: \n";
 	std::cin >> io;
 
+	for (j = 0; j < calculate; j++) {
+		cycles = rand() % 100;
+		newFile << "CALCULATE: " << cycles;
+	}
+	for (j = 0; j < io; j++) {
+		cycles = rand() % 100;
+		newFile << "I/O: " << cycles;
+	}
+
+	newFile.close();
 	return 0;
 }
 
-int processGenerator() {
-	return 0;
-}
 
-int generateProcess() {
-	return 0;
-}
-
-int createProcess(std::string name, int cycles) {
-	return 0;
-}
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
