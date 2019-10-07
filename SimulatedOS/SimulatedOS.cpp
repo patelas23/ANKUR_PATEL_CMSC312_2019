@@ -5,6 +5,12 @@
 #include <fstream>
 #include <string>
 #include "Scheduler.h"
+#include "Dispatcher.h"
+
+struct ProgramTemplate {
+	std::string name;
+	int runtime, memory;
+};
 
 int main()
 {
@@ -12,14 +18,20 @@ int main()
 
 	int num_of_processes, i = 0;
 
-	string program_name, current_line;
+	string program_name, current_line, process_name;
 	ifstream programFile;
 
 	Scheduler scheduler;
+	Dispatcher dispatcher;
 
 	cout << "Enter name of program (omitting file extensions)\n";
-	cout << "browser \n file_explorer \n media_player \n text_editor \n";
+	cout << " browser \n file_explorer \n media_player \n text_editor \n";
+	cout << "Or enter 1 to create a new program.";
 	cin >> program_name;
+
+	if (program_name.compare("1")) {
+		programGenerator();
+	}
 
 	cout << "Enter number of processes to create\n";
 	cin >> num_of_processes;
@@ -29,9 +41,8 @@ int main()
 
 	//Read contents of file word-by-word
 	while (programFile >> current_line) {
-		Scheduler::pcb* a;
 		cout << current_line << "\n";
-		if (current_line.compare("Name: ") != 0) {
+		/*if (current_line.compare("Name: ") != 0) {
 			programFile >> a->name;
 		}
 		else if (current_line.compare("CALCULATE") != 0) {
@@ -46,8 +57,7 @@ int main()
 		}
 		else if (current_line.compare("EXE") != 0) {
 			break;
-		}
-		scheduler.addProcess(a);
+		}*/
 	}
 
 	for (i = 0; i < num_of_processes; i++) {
@@ -62,15 +72,17 @@ int main()
 // Helper function which uses master program template
 // to randomly generate new job files
 int programGenerator() {
-	std::ifstream newFile;
+	std::ofstream newFile;
 	int calculate, io, j;
 	std::string name;
 
-	std::cout << "Enter name of new program: \n";
+	std::cout << "Enter name of new program : \n";
 	std::cin >> name;
+	newFile.open("../Program Files/" + name + ".txt");
 
 	std::cout << "Enter number of CPU processes to populate: \n";
 	std::cin >> calculate;
+	newFile << calculate;
 
 	std::cout << "Enter number of I/O processes to populate: \n";
 	std::cin >> io;
@@ -92,11 +104,3 @@ int createProcess(std::string name, int cycles) {
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started:
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
