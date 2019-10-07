@@ -2,15 +2,15 @@
 #include <iostream>
 
 Scheduler::Scheduler(void) {
-	//nothin
+	
 }
 
 int Scheduler::createProcess(std::string name, int cycles, int memory)
 {
-	return 0;
-}
+	pcb newProcess;
+	newProcess.time = cycles;
+	newProcess.memory = memory;
+	jobQueue.push(newProcess);
 
-int Scheduler::addProcess(pcb newProcess) {
-	std::cout << "Successfully called addprocess on " << newProcess.name;
 	return 0;
 }
