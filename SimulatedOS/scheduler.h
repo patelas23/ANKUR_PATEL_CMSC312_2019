@@ -4,8 +4,11 @@
 #include "Process.h"
 class Scheduler
 {
-	//Move to CPU
-	const int TOTAL_MEM = 4096;
+private:
+	std::queue <pcb> jobQueue;
+	std::queue <pcb> readyQueue;
+	std::queue <pcb> deviceQueue;
+
 public:
 	static int available_memory;
 
@@ -17,8 +20,4 @@ public:
 		return readyQueue;
 	}
 
-private:
-	std::queue <pcb> jobQueue;
-	std::queue <pcb> readyQueue;
-	std::queue <pcb> deviceQueue;
 };

@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="Dispatcher.cpp" />
+    <ClCompile Include="Process.cpp" />
     <ClCompile Include="scheduler.cpp" />
     <ClCompile Include="SimulatedOS.cpp" />
   </ItemGroup>
