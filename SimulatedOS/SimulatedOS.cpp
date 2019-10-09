@@ -73,7 +73,7 @@ int main()
 //Helper function which divides the given instruction queue into 
 //multiple processes
 int processGenerator(int x, std::queue<std::string> instructions) {
-	if (!(instructions.empty) && x!=0) {
+	if (!instructions.empty() && x!=0) {
 		x--;
 
 	}

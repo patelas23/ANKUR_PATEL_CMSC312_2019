@@ -21,7 +21,7 @@ std::string Process::getNextInstruction(void)
 {
 	std::string nextInstruction;
 	if (!(instructions.empty())) {
-		nextInstruction = instructions.front;
+		nextInstruction = instructions.front();
 		instructions.pop();
 	}
 	return nextInstruction;

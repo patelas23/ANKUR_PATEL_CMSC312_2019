@@ -26,7 +26,7 @@ public:
 
 	Scheduler(void);
 
-	int addProcess(Process p);
+	void addProcess(Process p);
 	pcb getNextProcess(void);
 
 	std::queue<pcb> getReadyQueue(void);
