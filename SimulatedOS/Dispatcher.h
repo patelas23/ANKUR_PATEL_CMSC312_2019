@@ -2,4 +2,5 @@
 class Dispatcher
 {
 	int setState(void);
+
 };
