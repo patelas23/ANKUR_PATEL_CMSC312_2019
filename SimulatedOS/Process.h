@@ -4,6 +4,10 @@
 
 class Process {
 private:
+	std::string name;
+	std::queue<std::string> instructions;
+	int pid;
+
 	struct pcb {
 		int runtime = 0;
 		int memory = 0;
@@ -15,12 +19,9 @@ private:
 		};
 	};
 public:
-	std::string name;
-	Process(std::string name, std::queue<std::string> instructions);
+	
+	Process(std::string n, std::queue<std::string> i, int id);
+
 	std::string getname(void);
 	std::string getNextInstruction(void);
-	int getPC(void);
-	int totalRuntime(void);
-
-
 };

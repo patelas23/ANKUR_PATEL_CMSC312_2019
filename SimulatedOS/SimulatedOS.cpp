@@ -8,6 +8,7 @@
 #include "Scheduler.h"
 #include "Dispatcher.h"
 #include "SimulatedOS.h"
+#include "Process.h"
 
 struct ProgramTemplate {
 	std::string name;
@@ -26,6 +27,7 @@ int main()
 
 	Scheduler scheduler;
 	Dispatcher dispatcher;
+	queue<string> instructions;
 
 	cout << "Enter name of program (omitting file extensions)\n";
 	cout << " browser \n file_explorer \n media_player \n text_editor \n";
@@ -39,6 +41,7 @@ int main()
 	cout << "Enter number of processes to create\n";
 	cin >> num_of_processes;
 	i = 0;
+
 
 	programFile.open("../Program Files/" + program_name + ".txt");
 
@@ -58,6 +61,7 @@ int main()
 
 	for (i = 0; i < num_of_processes; i++) {
 		//Create new processes
+		Process newProcess = Process(process_name, instructions, i);
 	}
 
 	programFile.close();
@@ -65,6 +69,15 @@ int main()
 	return 0;
 }
 
+
+//Helper function which divides the given instruction queue into 
+//multiple processes
+int processGenerator(int x, std::queue<std::string> instructions) {
+	if (!instructions.empty && x!=0) {
+		x--;
+
+	}
+}
 // Helper function which uses master program template
 // to randomly generate new job files
 int programGenerator() {
@@ -91,6 +104,7 @@ int programGenerator() {
 		cycles = rand() % 100;
 		newFile << "I/O: " << cycles;
 	}
+	newFile << "EXE";
 
 	newFile.close();
 	return 0;
