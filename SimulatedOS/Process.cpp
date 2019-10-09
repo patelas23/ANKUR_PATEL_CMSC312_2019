@@ -1,9 +1,7 @@
 #include "Process.h"
-#include <queue>
 
 
 Process::Process() {
-
 }
 Process::Process(std::string n, std::queue<std::string> i, int id)
 {
@@ -12,21 +10,23 @@ Process::Process(std::string n, std::queue<std::string> i, int id)
 	this->pid = id;
 }
 
+
+
 std::string Process::getname(void)
 {
-	return std::string();
+	return name;
 }
 
 std::string Process::getNextInstruction(void)
 {
-	return std::string();
+	if (!(instructions.empty())) {
+		return instructions.pop();
+	}
 }
 
 int Process::getId(void)
 {
 	return pid;
 }
-
-
 
 

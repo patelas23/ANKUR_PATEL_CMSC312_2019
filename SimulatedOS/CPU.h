@@ -1,10 +1,12 @@
 #pragma once
 #include <process.h>
+#include "Scheduler.cpp"
 class CPU
 {
 public:
 	
 private:
-	process currentProcess;
+	pcb currentProcess;
+
 };
 

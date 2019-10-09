@@ -1,17 +1,6 @@
 #include "scheduler.h"
 #include <iostream>
 
-struct pcb {
-	int runtime = 0;
-	int memory = 0;
-	int pc = 0;
-	bool ioStatus = false; //No associated I/O by default
-	enum state {
-		READY,
-		WAITING
-	};
-};
-
 Scheduler::Scheduler(void) {
 	jobQueue;
 }
@@ -24,12 +13,23 @@ int Scheduler::addProcess(Process p)
 	jobQueue.push(processBlock);
 }
 
-Process Scheduler::getNextProcess(void)
+pcb Scheduler::getNextProcess(void)
 {
-	return jobQueue.front;
+	jobQueue.pop();
+	return jobQueue.front();
 }
 
 std::queue<pcb> Scheduler::getReadyQueue(void)
 {
 	return readyQueue;
+}
+
+std::queue<pcb> Scheduler::getJobQueue(void)
+{
+	return jobQueue;
+}
+
+std::queue<pcb> Scheduler::getDeviceQueue(void)
+{
+	return deviceQueue;
 }
