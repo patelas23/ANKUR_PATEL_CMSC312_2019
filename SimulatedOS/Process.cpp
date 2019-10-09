@@ -2,7 +2,9 @@
 #include <queue>
 
 
+Process::Process() {
 
+}
 Process::Process(std::string n, std::queue<std::string> i, int id)
 {
 	this->name = n;
@@ -18,6 +20,11 @@ std::string Process::getname(void)
 std::string Process::getNextInstruction(void)
 {
 	return std::string();
+}
+
+int Process::getId(void)
+{
+	return pid;
 }
 
 

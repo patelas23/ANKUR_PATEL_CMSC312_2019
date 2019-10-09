@@ -1,16 +1,35 @@
 #include "scheduler.h"
 #include <iostream>
 
+struct pcb {
+	int runtime = 0;
+	int memory = 0;
+	int pc = 0;
+	bool ioStatus = false; //No associated I/O by default
+	enum state {
+		READY,
+		WAITING
+	};
+};
+
 Scheduler::Scheduler(void) {
-	
+	jobQueue;
 }
 
-int Scheduler::createProcess(std::string name, int cycles, int memory)
+int Scheduler::addProcess(Process p)
 {
-	pcb newProcess;
-	newProcess.time = cycles;
-	newProcess.memory = memory;
-	jobQueue.push(newProcess);
+	pcb processBlock;
+	processBlock.pc = 0;
+	processBlock.runtime = p.getId;
+	jobQueue.push(processBlock);
+}
 
-	return 0;
+Process Scheduler::getNextProcess(void)
+{
+	return jobQueue.front;
+}
+
+std::queue<pcb> Scheduler::getReadyQueue(void)
+{
+	return readyQueue;
 }

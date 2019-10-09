@@ -14,10 +14,9 @@ public:
 
 	Scheduler(void);
 
-	int createProcess(std::string name, int cycles, int memory);
+	int addProcess(Process p);
+	Process getNextProcess(void);
 
-	std::queue <pcb> getReadyQueue(void) {
-		return readyQueue;
-	}
+	std::queue <pcb> getReadyQueue(void);
 
 };
