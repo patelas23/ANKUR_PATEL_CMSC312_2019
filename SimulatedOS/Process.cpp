@@ -19,9 +19,12 @@ std::string Process::getname(void)
 
 std::string Process::getNextInstruction(void)
 {
+	std::string nextInstruction;
 	if (!(instructions.empty())) {
-		return instructions.pop();
+		nextInstruction = instructions.front;
+		instructions.pop();
 	}
+	return nextInstruction;
 }
 
 int Process::getId(void)

@@ -9,7 +9,7 @@ int Scheduler::addProcess(Process p)
 {
 	pcb processBlock;
 	processBlock.pc = 0;
-	processBlock.runtime = p.getId;
+	processBlock.runtime = p.getId();
 	jobQueue.push(processBlock);
 }
 
