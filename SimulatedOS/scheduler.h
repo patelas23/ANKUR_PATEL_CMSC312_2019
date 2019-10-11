@@ -5,6 +5,7 @@
 
 struct pcb {
 	int runtime = 0;
+	std::queue<std::string> stack;
 	int memory = 0;
 	int pc = 0;
 	bool ioStatus = false; //No associated I/O by default
@@ -26,7 +27,7 @@ public:
 
 	Scheduler(void);
 
-	int addProcess(Process p);
+	void addProcess(Process p);
 	pcb getNextProcess(void);
 
 	std::queue<pcb> getReadyQueue(void);

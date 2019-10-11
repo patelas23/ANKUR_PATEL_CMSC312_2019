@@ -27,6 +27,11 @@ std::string Process::getNextInstruction(void)
 	return nextInstruction;
 }
 
+std::queue<std::string> Process::getInstructions(void)
+{
+	return this->instructions;
+}
+
 int Process::getId(void)
 {
 	return pid;

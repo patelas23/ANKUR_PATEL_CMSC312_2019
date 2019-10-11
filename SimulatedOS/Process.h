@@ -16,5 +16,6 @@ public:
 
 	std::string getname(void);
 	std::string getNextInstruction(void);
+	std::queue<std::string> getInstructions(void);
 	int getId(void);
 };
