@@ -1,6 +1,7 @@
 #pragma once
 class Dispatcher
 {
-	int setState(void);
+	int setState(Process p, std::string state);
+
 
 };

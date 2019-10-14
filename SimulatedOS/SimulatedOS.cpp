@@ -28,6 +28,7 @@ int main()
 	Scheduler scheduler;
 	Dispatcher dispatcher;
 	queue<string> instructions;
+	queue<int> runtime;
 
 	cout << "Enter name of program (omitting file extensions)\n";
 	cout << " browser \n file_explorer \n media_player \n text_editor \n";
@@ -56,12 +57,13 @@ int main()
 		else {
 			process_type = (current_line.substr(0, current_line.find(":")));
 			programFile >> cycles;
+			runtime.push(cycles);
 		}
 	}
 
 	for (i = 0; i < num_of_processes; i++) {
 		//Create new processes
-		Process newProcess = Process(process_name, instructions, i);
+		Process newProcess = Process(process_name, instructions, runtime, i);
 	}
 
 	programFile.close();

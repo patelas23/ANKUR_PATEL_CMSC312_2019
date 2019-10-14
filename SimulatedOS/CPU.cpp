@@ -12,10 +12,16 @@ pcb CPU::getProcess(void) {
 void CPU::execute(void)
 {
 	int currentlyRunning;
-	if (quantum > 0) {
-		if (!currentProcess.stack.empty) {
-			currentInstruction = currentProcess.stack.front();
-			currentProcess.stack.pop();
+	while (quantum > 0) {
+		currentInstruction = currentProcess.pc->getNextInstruction();
+		if (currentInstruction.compare("CALCULATE")) {
+			currentRuntime = currentProcess.pc->getRuntime();
+			while (currentRuntime) {
+				quantum--;
+				currentRuntime--;
+			}
+		}
+		else if (currentInstruction.compare("I/O")) {
 
 		}
 	}

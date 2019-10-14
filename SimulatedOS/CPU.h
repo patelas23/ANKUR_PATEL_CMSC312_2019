@@ -13,5 +13,6 @@ private:
 	int quantum = 15;
 	pcb currentProcess;
 	std::string currentInstruction;
+	int currentRuntime;
 };
 
