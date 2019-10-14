@@ -13,6 +13,11 @@ void CPU::execute(void)
 {
 	int currentlyRunning;
 	if (quantum > 0) {
+		if (!currentProcess.stack.empty) {
+			currentInstruction = currentProcess.stack.front();
+			currentProcess.stack.pop();
+
+		}
 	}
 
 }

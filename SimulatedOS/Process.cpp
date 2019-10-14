@@ -32,6 +32,10 @@ std::queue<std::string> Process::getInstructions(void)
 	return this->instructions;
 }
 
+Process* Process::getPointer(void) {
+	return this;
+}
+
 int Process::getId(void)
 {
 	return pid;

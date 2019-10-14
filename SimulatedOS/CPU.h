@@ -12,6 +12,6 @@ private:
 	int clock = 0;
 	int quantum = 15;
 	pcb currentProcess;
-
+	std::string currentInstruction;
 };
 
