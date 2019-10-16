@@ -9,20 +9,21 @@ pcb CPU::getProcess(void) {
 	return currentProcess;
 }
 
-void CPU::execute(void)
+void CPU::execute(Process p)
 {
 	int currentlyRunning;
 	while (quantum > 0) {
 		currentInstruction = currentProcess.pc->getNextInstruction();
 		if (currentInstruction.compare("CALCULATE")) {
 			currentRuntime = currentProcess.pc->getRuntime();
-			while (currentRuntime) {
+			while (currentRuntime>0) {
 				quantum--;
 				currentRuntime--;
+				increaseStep();
 			}
 		}
 		else if (currentInstruction.compare("I/O")) {
-
+			
 		}
 	}
 

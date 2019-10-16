@@ -4,12 +4,12 @@
 #include "Process.h"
 
 struct pcb {
-	int runtime = 0;
 	std::queue<std::string> stack;
 	int memory = 0;
 	Process* pc = 0;
 	bool ioStatus = false; //No associated I/O by default
 	enum state {
+		NEW,
 		READY,
 		WAITING
 	};

@@ -6,7 +6,8 @@ class CPU
 public:
 	void setProcess(pcb p);
 	pcb getProcess(void);
-	void execute(void);
+	void execute(Process p);
+
 	int increaseStep(void);
 private:
 	int clock = 0;
