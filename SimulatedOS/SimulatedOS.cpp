@@ -22,7 +22,7 @@ int main()
 	using namespace std;
 
 	int num_of_processes, i = 0;
-	int process_memory, cycles;
+	int process_memory, cycles, delim;
 
 	string program_name, current_line, process_name, process_type;
 	ifstream programFile;
@@ -57,16 +57,24 @@ int main()
 
 	//Read contents of file word-by-word
 	while (programFile >> current_line && current_line != "EXE") {
-		process_type = (current_line.substr(0, current_line.find(":")));
-		programFile >> cycles;
+		delim = current_line.find(":");
+
+		process_type = current_line.substr(0, delim);
+		cycles = std::stoi(current_line.substr(delim));
+
 		runtime.push(cycles);
 	}
 
 	for (i = 0; i < num_of_processes; i++) {
 		//Create new processes
+
 		Process newProcess = Process(process_name, instructions, runtime, i);
+		scheduler.addProcess(newProcess);
+
+		cout << newProcess.getPointer();
 	}
 
+	cout << scheduler.getNextProcess().stack.front();
 	programFile.close();
 
 	return 0;

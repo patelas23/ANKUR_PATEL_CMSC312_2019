@@ -1,6 +1,6 @@
 #pragma once
-#include <process.h>
-#include "Scheduler.cpp"
+#include "Process.h"
+#include "Scheduler.h"
 class CPU
 {
 public:
