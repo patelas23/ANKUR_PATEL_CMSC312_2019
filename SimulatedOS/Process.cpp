@@ -43,7 +43,7 @@ Process* Process::getPointer(void) {
 int Process::getRuntime(void) {
 	int r = runtime.front();
 	runtime.pop();
-	return r
+	return r;
 }
 
 int Process::getId(void)

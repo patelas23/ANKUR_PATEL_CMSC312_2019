@@ -2,7 +2,6 @@
 #include <iostream>
 
 Scheduler::Scheduler(void) {
-	jobQueue;
 }
 
 void Scheduler::addProcess(Process p)
@@ -10,15 +9,19 @@ void Scheduler::addProcess(Process p)
 	pcb processBlock;
 	processBlock.pc = p.getPointer();
 	processBlock.pc = 0;
-	processBlock.runtime = p.getId();
 	processBlock.stack = p.getInstructions();
+	processBlock.NEW;
 	jobQueue.push(processBlock);
 }
 
 pcb Scheduler::getNextProcess(void)
 {
-	jobQueue.pop();
-	return jobQueue.front();
+	pcb currentBlock;
+	if (!jobQueue.empty()) {
+		currentBlock = jobQueue.front();
+		jobQueue.pop();
+	}
+	return currentBlock;
 }
 
 std::queue<pcb> Scheduler::getReadyQueue(void)

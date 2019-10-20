@@ -10,6 +10,8 @@
 #include "SimulatedOS.h"
 #include "Process.h"
 
+int programGenerator(void);
+
 struct ProgramTemplate {
 	std::string name;
 	int runtime, memory;
@@ -33,6 +35,7 @@ int main()
 	cout << "Enter name of program (omitting file extensions)\n";
 	cout << " browser \n file_explorer \n media_player \n text_editor \n";
 	cout << "Or enter 1 to create a new program.";
+
 	cin >> program_name;
 
 	if (program_name.compare("1")) {
@@ -46,19 +49,17 @@ int main()
 
 	programFile.open("../Program Files/" + program_name + ".txt");
 
+	programFile >> current_line;
+	process_name = current_line.substr(current_line.compare("Name:"));
+
+	programFile >> current_line;
+	process_memory = std::stoi(current_line.substr(current_line.compare("Memory:")));
+
 	//Read contents of file word-by-word
 	while (programFile >> current_line && current_line != "EXE") {
-		if (current_line.compare("Name:") != 0) {
-			programFile >> process_name;
-		}
-		else if (current_line.compare("Memory:") != 0) {
-			programFile >> process_memory;
-		}
-		else {
-			process_type = (current_line.substr(0, current_line.find(":")));
-			programFile >> cycles;
-			runtime.push(cycles);
-		}
+		process_type = (current_line.substr(0, current_line.find(":")));
+		programFile >> cycles;
+		runtime.push(cycles);
 	}
 
 	for (i = 0; i < num_of_processes; i++) {
@@ -77,8 +78,8 @@ int main()
 int processGenerator(int x, std::queue<std::string> instructions) {
 	if (!instructions.empty() && x!=0) {
 		x--;
-
 	}
+	return x;
 }
 // Helper function which uses master program template
 // to randomly generate new job files

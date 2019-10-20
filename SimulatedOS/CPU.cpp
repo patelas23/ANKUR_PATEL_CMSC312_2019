@@ -11,7 +11,6 @@ pcb CPU::getProcess(void) {
 
 void CPU::execute(Process p)
 {
-	int currentlyRunning;
 	while (quantum > 0) {
 		currentInstruction = currentProcess.pc->getNextInstruction();
 		if (currentInstruction.compare("CALCULATE")) {
