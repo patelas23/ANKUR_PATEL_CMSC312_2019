@@ -22,9 +22,9 @@ int main()
 	using namespace std;
 
 	int num_of_processes, i = 0;
-	int process_memory, cycles, delim;
+	int processMemory, processRuntime, cycles, delim;
 
-	string program_name, current_line, process_name, process_type;
+	string program_name, current_line, word, processName, process_type;
 	ifstream programFile;
 
 	Scheduler scheduler;
@@ -34,47 +34,49 @@ int main()
 
 	cout << "Enter name of program (omitting file extensions)\n";
 	cout << " browser \n file_explorer \n media_player \n text_editor \n";
-	cout << "Or enter 1 to create a new program.";
+	//cout << "Or enter 1 to create a new program.\n";
 
 	cin >> program_name;
 
-	if (program_name.compare("1")) {
+	if (program_name == "1") {
 		programGenerator();
 	}
 
-	cout << "Enter number of processes to create\n";
+	programFile.open("../Program Files/" + program_name + ".txt");
+
+	cout << "Enter number of processes to create" << endl;
 	cin >> num_of_processes;
 	i = 0;
 
+	//Read in basic program parameters
+	std::getline(programFile, current_line);
+	processName = current_line.substr(current_line.find("Name") + 5);
 
-	programFile.open("../Program Files/" + program_name + ".txt");
+	std::getline(programFile, current_line);
+	processRuntime = stoi(current_line.substr(current_line.find("Total Runtime")+15));
 
-	programFile >> current_line;
-	process_name = current_line.substr(current_line.compare("Name:"));
+	std::getline(programFile, current_line);
+	processMemory = stoi(current_line.substr(current_line.find("Memory") + 8));
+	cout << processMemory << endl;
 
-	programFile >> current_line;
-	process_memory = std::stoi(current_line.substr(current_line.compare("Memory:")));
-
-	//Read contents of file word-by-word
-	while (programFile >> current_line && current_line != "EXE") {
-		delim = current_line.find(":");
-
-		process_type = current_line.substr(0, delim);
-		cycles = std::stoi(current_line.substr(delim));
-
-		runtime.push(cycles);
+	//Read program script word-by-word
+	while (programFile >> word) {
+		if (word == "EXE") {
+			break;
+		}
+		//process_type = current_line.substr(0, delim);
+		//cycles = std::stoi(current_line.substr(delim));
+		//runtime.push(cycles);
+		//cout << current_line << endl;	
 	}
 
-	for (i = 0; i < num_of_processes; i++) {
+	//for (i = 0; i < num_of_processes; i++) {
 		//Create new processes
+		//Process newProcess = Process(processName, instructions, runtime, i);
+		//scheduler.addProcess(newProcess);
+	//}
 
-		Process newProcess = Process(process_name, instructions, runtime, i);
-		scheduler.addProcess(newProcess);
-
-		cout << newProcess.getPointer();
-	}
-
-	cout << scheduler.getNextProcess().stack.front();
+	//cout << scheduler.getNextProcess().stack.front();
 	programFile.close();
 
 	return 0;
