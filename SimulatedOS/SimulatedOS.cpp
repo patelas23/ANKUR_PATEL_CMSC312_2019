@@ -81,9 +81,11 @@ int main()
 		}
 		else if (word == "acquire") {
 			//denote critical section
+			continue;
 		}
 		else if (word == "release") {
 			//end of critical section
+			continue;
 		}
 		else {
 			programFile >> word;
