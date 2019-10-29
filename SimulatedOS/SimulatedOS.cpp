@@ -9,6 +9,7 @@
 #include "Dispatcher.h"
 #include "SimulatedOS.h"
 #include "Process.h"
+#include <time.h>
 
 int programGenerator(void);
 
@@ -27,6 +28,8 @@ int main()
 	string program_name, current_line, word, processName, process_type;
 	ifstream programFile;
 
+	srand (time(NULL));
+
 	Scheduler scheduler;
 	Dispatcher dispatcher;
 	queue<string> instructions;
@@ -41,6 +44,7 @@ int main()
 	if (program_name == "1") {
 		programGenerator();
 	}
+
 
 	programFile.open("../Program Files/" + program_name + ".txt");
 
@@ -57,18 +61,47 @@ int main()
 
 	std::getline(programFile, current_line);
 	processMemory = stoi(current_line.substr(current_line.find("Memory") + 8));
-	cout << processMemory << endl;
 
 	//Read program script word-by-word
 	while (programFile >> word) {
+		instructions.push(word);
+		cout << word << endl;
 		if (word == "EXE") {
 			break;
 		}
-		//process_type = current_line.substr(0, delim);
-		//cycles = std::stoi(current_line.substr(delim));
-		//runtime.push(cycles);
-		//cout << current_line << endl;	
+		else if (word == "CALC") {
+			programFile >> cycles;
+			cycles -= rand() % cycles;
+			runtime.push(cycles);
+		}
+		else if (word == "I/O") {
+			programFile >> cycles;
+			cycles -= rand() % cycles;
+			runtime.push(cycles);
+		}
+		else if (word == "acquire") {
+			//denote critical section
+		}
+		else if (word == "release") {
+			//end of critical section
+		}
+		else {
+			programFile >> word;
+			continue;
+		}
+		
 	}
+
+
+	cout << runtime.front() << endl;
+	cout << instructions.front() << endl;
+	runtime.pop();
+	instructions.pop();
+	cout << runtime.front() << endl;
+	cout << instructions.front() << endl;
+
+	
+	
 
 	//for (i = 0; i < num_of_processes; i++) {
 		//Create new processes
