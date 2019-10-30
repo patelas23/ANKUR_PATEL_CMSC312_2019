@@ -25,7 +25,8 @@ int main()
 	int num_of_processes, i = 0;
 	int processMemory, processRuntime, cycles, delim;
 
-	string program_name, current_line, word, processName, process_type;
+	string program_name, current_line, word, processName, process_type, test;
+	char buf [100];
 	ifstream programFile;
 
 	srand (time(NULL));
@@ -45,13 +46,16 @@ int main()
 		programGenerator();
 	}
 
-
-	programFile.open("../Program Files/" + program_name + ".txt");
-
-	cout << "Enter number of processes to create" << endl;
+	cout << "Enter number of processes to run" << endl;
 	cin >> num_of_processes;
 	i = 0;
 
+	cin.ignore();
+	current_line.clear();
+
+	programFile.open("../Program Files/" + program_name + ".txt");
+	//programFile.open("../Files/this.txt");
+	
 	//Read in basic program parameters
 	std::getline(programFile, current_line);
 	processName = current_line.substr(current_line.find("Name") + 5);
@@ -60,21 +64,15 @@ int main()
 	processRuntime = stoi(current_line.substr(current_line.find("Total Runtime")+15));
 
 	std::getline(programFile, current_line);
-	processMemory = stoi(current_line.substr(current_line.find("Memory") + 8));
+	processMemory = stoi(current_line.substr(current_line.find("Memory") + 7));
 
 	//Read program script word-by-word
 	while (programFile >> word) {
 		instructions.push(word);
-		cout << word << endl;
 		if (word == "EXE") {
 			break;
 		}
-		else if (word == "CALC") {
-			programFile >> cycles;
-			cycles -= rand() % cycles;
-			runtime.push(cycles);
-		}
-		else if (word == "I/O") {
+		else if (word == "CALC" || word == "I/O") {
 			programFile >> cycles;
 			cycles -= rand() % cycles;
 			runtime.push(cycles);
@@ -89,29 +87,17 @@ int main()
 		}
 		else {
 			programFile >> word;
+			cout << word << endl;
 			continue;
 		}
-		
 	}
 
-
-	cout << runtime.front() << endl;
-	cout << instructions.front() << endl;
-	runtime.pop();
-	instructions.pop();
-	cout << runtime.front() << endl;
-	cout << instructions.front() << endl;
-
-	
-	
-
-	//for (i = 0; i < num_of_processes; i++) {
+	for (i = 0; i < num_of_processes; i++) {
 		//Create new processes
-		//Process newProcess = Process(processName, instructions, runtime, i);
-		//scheduler.addProcess(newProcess);
-	//}
+		Process newProcess = Process(processName, instructions, runtime, i);
+		scheduler.addProcess(newProcess);
+	}
 
-	//cout << scheduler.getNextProcess().stack.front();
 	programFile.close();
 
 	return 0;
