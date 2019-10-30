@@ -98,6 +98,8 @@ int main()
 		scheduler.addProcess(newProcess);
 	}
 
+
+
 	programFile.close();
 
 	return 0;

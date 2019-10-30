@@ -10,6 +10,7 @@ Process::Process(std::string n, std::queue<std::string> i, std::queue<int> r, in
 	this->instructions = i;
 	this->runtime = r;
 	this->pid = id;
+	this->state = "NEW";
 }
 
 
@@ -47,9 +48,20 @@ int Process::getRuntime(void) {
 	return r;
 }
 
+std::string Process::getState(void)
+{
+	return this->state;
+}
+
 int Process::getId(void)
 {
 	return pid;
+}
+
+void Process::setState(std::string s)
+{
+	this->state = s;
+	return;
 }
 
 

@@ -6,6 +6,7 @@
 class Process {
 private:
 	std::string name;
+	std::string state;
 	std::queue<std::string> instructions;
 	std::queue<int> runtime;
 	struct inst {
@@ -24,5 +25,7 @@ public:
 	std::queue<std::string> getInstructions(void);
 	Process* getPointer(void);
 	int getRuntime(void);
+	std::string getState(void);
 	int getId(void);
+	void setState(std::string s);
 };
