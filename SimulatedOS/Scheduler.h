@@ -23,7 +23,7 @@ private:
 	std::queue <pcb> deviceQueue;
 
 public:
-	static int available_memory;
+	static const int AVAILABLE_MEM = 256;
 
 	Scheduler(void);
 

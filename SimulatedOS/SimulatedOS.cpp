@@ -92,13 +92,13 @@ int main()
 		}
 	}
 
+	//Read program from file line-by-line
+
 	for (i = 0; i < num_of_processes; i++) {
 		//Create new processes
 		Process newProcess = Process(processName, instructions, runtime, i);
 		scheduler.addProcess(newProcess);
 	}
-
-
 
 	programFile.close();
 
@@ -106,13 +106,19 @@ int main()
 }
 
 
+//Helper function for generating randomized processes based on given program
+Process processGenerator() {
+
+}
 //Helper function which divides the given instruction queue into 
 //multiple processes
-int processGenerator(int x, std::queue<std::string> instructions) {
+std::queue<std::string> instructionGenerator(int x, std::queue<std::string> instructions) {
+	std::queue<std::string> stack;
 	if (!instructions.empty() && x!=0) {
+
 		x--;
 	}
-	return x;
+	return stack;
 }
 // Helper function which uses master program template
 // to randomly generate new job files
