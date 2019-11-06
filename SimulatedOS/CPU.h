@@ -4,16 +4,16 @@
 class CPU
 {
 public:
+	//Pass process to CPU, removing previous process if present
 	void setCurrentProcess(pcb p);
+	//Returns the currently running process
 	pcb getCurrentProcess(void);
-	
+	//Begin cycle of execution
 	void execute(Process p);
 	void execute(void);
-	int increaseStep(void);
 
 private:
 	int clock = 0;
-	int quantum = 15;
 	pcb currentProcess;
 	std::string currentInstruction;
 	int currentRuntime;
