@@ -6,6 +6,7 @@ class CPU
 public:
 	void setCurrentProcess(pcb p);
 	pcb getCurrentProcess(void);
+	
 	void execute(Process p);
 	void execute(void);
 	int increaseStep(void);

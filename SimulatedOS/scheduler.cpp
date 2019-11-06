@@ -10,7 +10,7 @@ void Scheduler::addProcess(Process p)
 	processBlock.pc = p.getPointer();
 	processBlock.pc = 0;
 	processBlock.stack = p.getInstructions();
-	processBlock.NEW;
+	processBlock.state = "NEW";
 	jobQueue.push(processBlock);
 }
 
@@ -21,6 +21,7 @@ pcb Scheduler::getNextProcess(void)
 		currentBlock = jobQueue.front();
 		jobQueue.pop();
 	}
+	readyQueue.push(currentBlock);
 	return currentBlock;
 }
 
