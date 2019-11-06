@@ -28,4 +28,7 @@ public:
 	std::string getState(void);
 	int getId(void);
 	void setState(std::string s);
+
+	//MAYBE????
+	//void run(CPU c);
 };

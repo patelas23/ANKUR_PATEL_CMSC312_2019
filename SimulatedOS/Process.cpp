@@ -64,4 +64,5 @@ void Process::setState(std::string s)
 	return;
 }
 
-
+//MAYBE
+//void run(CPU c, this*) { c.add(this.nextInstruction(), c.decrementTimer  }

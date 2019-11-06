@@ -5,14 +5,10 @@
 
 struct pcb {
 	std::queue<std::string> stack;
+	std::string state; //NEW, READY, WAITING, BLOCKED, RUN
 	int memory = 0;
 	Process* pc = 0;
 	bool ioStatus = false; //No associated I/O by default
-	enum state {
-		NEW,
-		READY,
-		WAITING
-	};
 };
 
 class Scheduler
@@ -24,6 +20,7 @@ private:
 
 public:
 	static const int AVAILABLE_MEM = 256;
+	int quantum = 15;
 
 	Scheduler(void);
 

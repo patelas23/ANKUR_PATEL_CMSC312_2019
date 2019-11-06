@@ -1,11 +1,11 @@
 #include "CPU.h"
 
-void CPU::setProcess(pcb p)
+void CPU::setCurrentProcess(pcb p)
 {
 	currentProcess = p;
 }
 
-pcb CPU::getProcess(void) {
+pcb CPU::getCurrentProcess(void) {
 	return currentProcess;
 }
 
@@ -26,6 +26,10 @@ void CPU::execute(Process p)
 		}
 	}
 
+}
+
+void CPU::execute(void)
+{
 }
 
 int CPU::increaseStep(void)
