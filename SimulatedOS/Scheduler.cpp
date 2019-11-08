@@ -7,8 +7,7 @@ Scheduler::Scheduler(void) {
 void Scheduler::addProcess(Process p)
 {
 	pcb processBlock;
-	processBlock.pc = p.getPointer();
-	processBlock.pc = 0;
+	processBlock.pc = &p;
 	processBlock.stack = p.getInstructions();
 	processBlock.state = "NEW";
 	jobQueue.push(processBlock);

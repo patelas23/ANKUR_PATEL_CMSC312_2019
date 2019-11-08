@@ -38,10 +38,6 @@ std::queue<std::string> Process::getInstructions(void)
 	return this->instructions;
 }
 
-Process* Process::getPointer(void) {
-	return this;
-}
-
 int Process::getRuntime(void) {
 	int r = runtime.front();
 	runtime.pop();

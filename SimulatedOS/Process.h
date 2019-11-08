@@ -23,7 +23,6 @@ public:
 	std::string getname(void);
 	std::string getNextInstruction(void);
 	std::queue<std::string> getInstructions(void);
-	Process* getPointer(void);
 	int getRuntime(void);
 	std::string getState(void);
 	int getId(void);

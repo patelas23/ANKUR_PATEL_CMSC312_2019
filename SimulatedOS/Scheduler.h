@@ -7,9 +7,9 @@
 //Maintains information about each process in the system
 struct pcb {
 	std::queue<std::string> stack;
-	std::string state; //NEW, READY, WAITING, BLOCKED, RUN
+	std::string state = "NEW"; //(NEW), READY, WAITING, BLOCKED, RUN
 	int memory = 0;
-	Process* pc = 0;
+	Process *pc = nullptr;
 	bool ioStatus = false; //No associated I/O by default
 };
 

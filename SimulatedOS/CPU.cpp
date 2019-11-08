@@ -1,8 +1,17 @@
 #include "CPU.h"
 
-void CPU::setCurrentProcess(pcb p)
+pcb CPU::setCurrentProcess(pcb p)
 {
+	pcb temp = {};
+	if (currentProcess.state == "RUN") {
+		currentProcess.state = "BLOCKED";
+		temp = currentProcess;
+		
+	}
 	currentProcess = p;
+	return temp;
+
+
 }
 
 pcb CPU::getCurrentProcess(void) {
@@ -11,14 +20,13 @@ pcb CPU::getCurrentProcess(void) {
 
 void CPU::execute(Process p)
 {
-	while (quantum > 0) {
+	//Loop should run continuously, and somehow update the scheduler time quantum
+	while (true) {
 		currentInstruction = currentProcess.pc->getNextInstruction();
 		if (currentInstruction.compare("CALCULATE")) {
 			currentRuntime = currentProcess.pc->getRuntime();
 			while (currentRuntime>0) {
-				quantum--;
 				currentRuntime--;
-				increaseStep();
 			}
 		}
 		else if (currentInstruction.compare("I/O")) {
@@ -30,10 +38,10 @@ void CPU::execute(Process p)
 
 void CPU::execute(void)
 {
-}
-
-int CPU::increaseStep(void)
-{
-	clock++;
-	return clock;
+	if (currentProcess.pc == 0) {
+		return;
+	}
+	while (true) {
+		currentInstruction = currentProcess.stack.front();
+	}
 }

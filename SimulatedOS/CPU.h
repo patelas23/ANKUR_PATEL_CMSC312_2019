@@ -5,11 +5,11 @@ class CPU
 {
 public:
 	//Pass process to CPU, removing previous process if present
-	void setCurrentProcess(pcb p);
+	pcb setCurrentProcess(pcb p);
 	//Returns the currently running process
 	pcb getCurrentProcess(void);
-	//Begin cycle of execution
 	void execute(Process p);
+	//Begin cycle of execution
 	void execute(void);
 
 private:
