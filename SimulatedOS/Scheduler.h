@@ -13,6 +13,8 @@ struct pcb {
 	bool ioStatus = false; //No associated I/O by default
 };
 
+
+
 class Scheduler
 {
 private:
@@ -32,7 +34,9 @@ public:
 
 	//insert a new process into the Job Queue
 	void addProcess(Process p);
+	void addProcess(pcb b);
 	//
+	void resetQuantum(void);
 	pcb getNextProcess(void);
 
 	//Returns the specified queue

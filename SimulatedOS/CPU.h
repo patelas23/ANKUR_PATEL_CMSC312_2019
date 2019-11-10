@@ -8,9 +8,12 @@ public:
 	pcb setCurrentProcess(pcb p);
 	//Returns the currently running process
 	pcb getCurrentProcess(void);
-	void execute(Process p);
+	//Returns current system time
+	int getClock(void);
 	//Begin cycle of execution
 	void execute(void);
+	//Preempt currently running process
+	void execute(pcb p);
 
 private:
 	int clock = 0;

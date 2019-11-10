@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="Dispatcher.cpp" />
+    <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Process.cpp" />
     <ClCompile Include="scheduler.cpp" />
     <ClCompile Include="SimulatedOS.cpp" />
@@ -160,6 +161,7 @@
   <ItemGroup>
     <ClInclude Include="CPU.h" />
     <ClInclude Include="Dispatcher.h" />
+    <ClInclude Include="Memory.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="scheduler.h" />
     <ClInclude Include="SimulatedOS.h" />

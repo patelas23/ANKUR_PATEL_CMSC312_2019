@@ -11,6 +11,7 @@
 #include "SimulatedOS.h"
 #include "Process.h"
 #include <time.h>
+#include "CPU.h"
 
 int programGenerator(void);
 
@@ -33,6 +34,7 @@ int main()
 	srand (time(NULL));
 
 	Scheduler scheduler;
+	CPU cpu;
 	Dispatcher dispatcher;
 	queue<string> instructions;
 	queue<int> runtime;
@@ -96,12 +98,23 @@ int main()
 	//Read program from file line-by-line
 
 	for (i = 0; i < num_of_processes; i++) {
-		//Create new processes
+		//Create new processes based on the program
 		Process newProcess = Process(processName, instructions, runtime, i);
 		scheduler.addProcess(newProcess);
 	}
 
 	programFile.close();
+
+	while (true) {
+		cpu.execute();
+		if (scheduler.quantum == 0) {
+			cpu.setCurrentProcess(scheduler.getNextProcess());
+		}
+	}
+
+	//Execute CPU
+
+
 
 	return 0;
 }

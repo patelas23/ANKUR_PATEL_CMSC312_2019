@@ -18,11 +18,44 @@ pcb CPU::getCurrentProcess(void) {
 	return currentProcess;
 }
 
-void CPU::execute(Process p)
+int CPU::getClock(void)
 {
-	//Loop should run continuously, and somehow update the scheduler time quantum
+	return clock;
+}
+
+void CPU::execute(void)
+{
+	if (currentProcess.pc == 0) {
+		clock++;//
+		//currentProcess = Scheduler.getNextProcess();
+		return;
+	}
+	else {
+		if (currentRuntime <= 0) {
+			currentInstruction = currentProcess.pc->getNextInstruction();
+			currentRuntime = currentProcess.pc->getRuntime();
+		}
+		clock++;
+		currentRuntime--;
+	}
+
+	//REMOVE
 	while (true) {
-		currentInstruction = currentProcess.pc->getNextInstruction();
+		currentInstruction = currentProcess.stack.front();
+		if (currentInstruction.compare("CALCULATE")) {
+			currentRuntime = currentProcess.pc->getRuntime();
+			while (currentRuntime > 0) {
+
+			}
+		}
+	}
+}
+
+void CPU::execute(pcb p)
+{
+	//Loop should run continuously, and update the scheduler time quantum
+	while (true) {
+		currentInstruction = p.pc->getNextInstruction();
 		if (currentInstruction.compare("CALCULATE")) {
 			currentRuntime = currentProcess.pc->getRuntime();
 			while (currentRuntime>0) {
@@ -36,12 +69,5 @@ void CPU::execute(Process p)
 
 }
 
-void CPU::execute(void)
-{
-	if (currentProcess.pc == 0) {
-		return;
-	}
-	while (true) {
-		currentInstruction = currentProcess.stack.front();
-	}
-}
+
+

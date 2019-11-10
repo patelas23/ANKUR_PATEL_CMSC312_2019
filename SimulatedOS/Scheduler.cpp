@@ -13,12 +13,27 @@ void Scheduler::addProcess(Process p)
 	jobQueue.push(processBlock);
 }
 
+//Function for replacing a partially completed process into the queue
+void Scheduler::addProcess(pcb b) {
+
+}
+
+void Scheduler::resetQuantum(void)
+{
+	quantum = 15;
+}
+
 pcb Scheduler::getNextProcess(void)
 {
 	pcb currentBlock;
+	resetQuantum();
 	if (!jobQueue.empty()) {
 		currentBlock = jobQueue.front();
+		currentBlock.state = "READY";
 		jobQueue.pop();
+	}
+	else {
+		return;
 	}
 	readyQueue.push(currentBlock);
 	return currentBlock;
