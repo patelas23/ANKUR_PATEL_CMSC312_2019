@@ -108,7 +108,8 @@ int main()
 	while (true) {
 		cpu.execute();
 		if (scheduler.quantum == 0) {
-			cpu.setCurrentProcess(scheduler.getNextProcess());
+			dispatcher.prev = cpu.setCurrentProcess(scheduler.getNextProcess());
+			scheduler.addProcess(dispatcher.prev);
 		}
 	}
 

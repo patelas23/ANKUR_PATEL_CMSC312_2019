@@ -1,6 +1,6 @@
 #include "Dispatcher.h"
 
-Dispatcher::Dispatcher(Process p)
+Dispatcher::Dispatcher()
 {
-	prev = p;
+
 }
