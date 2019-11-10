@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <queue>
+#include <list>
 #include "Process.h"
 
 //Process Control Block
@@ -12,6 +13,11 @@ struct pcb {
 	Process *pc = nullptr;
 	bool ioStatus = false; //No associated I/O by default
 };
+
+typedef struct {
+	int value;
+	//List<Process> list;
+} semaphore;
 
 
 
@@ -32,11 +38,17 @@ public:
 
 	Scheduler(void);
 
+	//Semaphore operations
+	void wait(semaphore *S);
+	void signal(semaphore* S);
+
 	//insert a new process into the Job Queue
 	void addProcess(Process p);
 	void addProcess(pcb b);
-	//
+
 	void resetQuantum(void);
+
+	//Returns the next scheduled process, preempting if needed
 	pcb getNextProcess(void);
 
 	//Returns the specified queue
