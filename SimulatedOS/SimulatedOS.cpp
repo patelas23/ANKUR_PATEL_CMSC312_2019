@@ -25,10 +25,9 @@ int main()
 	using namespace std;
 
 	int num_of_processes, i = 0;
-	int processMemory, processRuntime, cycles, delim;
+	int processMemory, processRuntime, cycles;
 
 	string program_name, current_line, word, processName, process_type, test;
-	char buf [100];
 	ifstream programFile;
 
 	srand (time(NULL));
@@ -113,7 +112,6 @@ int main()
 		scheduler.quantum--;
 		if (scheduler.quantum <= 0) {
 			dispatcher.prev = cpu.setCurrentProcess(scheduler.getNextProcess());
-
 			scheduler.addProcess(dispatcher.prev);
 		}
 		else {
@@ -130,7 +128,8 @@ int main()
 
 //Helper function for generating randomized processes based on given program
 Process processGenerator() {
-
+	Process p;
+	return p;
 }
 //Helper function which divides the given instruction queue into 
 //multiple processes

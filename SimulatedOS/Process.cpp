@@ -54,6 +54,18 @@ int Process::getId(void)
 	return pid;
 }
 
+void Process::setInstruction(std::string s)
+{
+	instructions.pop();
+	instructions.push(s);
+}
+
+void Process::setRuntime(int x)
+{
+	runtime.pop();
+	runtime.push(x);
+}
+
 void Process::setState(std::string s)
 {
 	this->state = s;

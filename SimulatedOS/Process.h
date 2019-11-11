@@ -26,8 +26,7 @@ public:
 	int getRuntime(void);
 	std::string getState(void);
 	int getId(void);
+	void setInstruction(std::string s);
+	void setRuntime(int x);
 	void setState(std::string s);
-
-	//MAYBE????
-	//void run(CPU c);
 };

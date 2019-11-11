@@ -44,6 +44,7 @@ void Scheduler::resetQuantum(void)
 pcb Scheduler::getNextProcess(void)
 {
 	pcb currentBlock;
+	currentBlock.state = "EXIT";
 	resetQuantum();
 	if (!readyQueue.empty()) {
 		currentBlock = readyQueue.front();
@@ -56,7 +57,7 @@ pcb Scheduler::getNextProcess(void)
 		jobQueue.pop();
 	}
 	else {
-		return;
+		return currentBlock;
 	}
 	readyQueue.push(currentBlock);
 	return currentBlock;

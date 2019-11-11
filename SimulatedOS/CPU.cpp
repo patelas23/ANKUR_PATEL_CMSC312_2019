@@ -5,6 +5,8 @@ pcb CPU::setCurrentProcess(pcb p)
 	pcb temp = {};
 	if (currentProcess.state == "RUN") {
 		currentProcess.state = "WAITING";
+		currentProcess.pc->setInstruction(currentInstruction);
+		currentProcess.pc->setRuntime(currentRuntime);
 		temp = currentProcess;
 	}
 	currentProcess = p;
@@ -23,7 +25,7 @@ int CPU::getClock(void)
 pcb CPU::execute(pcb p)
 {
 	if (currentProcess.pc == 0) {
-		clock++;//
+		clock++;
 		currentProcess = p;
 		currentInstruction = p.pc->getNextInstruction();
 		currentRuntime = p.pc->getRuntime();

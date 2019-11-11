@@ -3,13 +3,14 @@
 #include <queue>
 #include <vector>
 #include "Process.h"
+#include "Memory.h"
 
 //Process Control Block
 //Maintains information about each process in the system
 struct pcb {
 	std::queue<std::string> stack;
 	std::string state = "NEW"; //(NEW), READY, WAITING, BLOCKED, RUN, EXIT
-	int memory = 0;
+	Memory memory;
 	Process *pc = 0;
 	bool ioStatus = false; //No associated I/O by default
 };
