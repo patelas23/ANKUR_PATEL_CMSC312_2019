@@ -4,6 +4,24 @@
 Scheduler::Scheduler(void) {
 }
 
+void Scheduler::wait(semaphore* S)
+{
+	S->value--;
+	if (S->value < 0) {
+		//S->list.push_back(); Push most recent process
+		//block()
+	}
+}
+
+void Scheduler::signal(semaphore* S)
+{
+	S->value++;
+	if (S->value <= 0) {
+		//remove process from list
+		//wakeup(process);
+	}
+}
+
 void Scheduler::addProcess(Process p)
 {
 	pcb processBlock;
@@ -13,9 +31,8 @@ void Scheduler::addProcess(Process p)
 	jobQueue.push(processBlock);
 }
 
-//Function for replacing a partially completed process into the queue
-void Scheduler::addProcess(pcb b) {
-	b.state = "WAITING";
+void Scheduler::addProcess(pcb &b) {
+	b.state = "READY";
 	readyQueue.push(b);
 }
 

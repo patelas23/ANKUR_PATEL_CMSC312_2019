@@ -4,14 +4,11 @@ pcb CPU::setCurrentProcess(pcb p)
 {
 	pcb temp = {};
 	if (currentProcess.state == "RUN") {
-		currentProcess.state = "BLOCKED";
+		currentProcess.state = "WAITING";
 		temp = currentProcess;
-		
 	}
 	currentProcess = p;
 	return temp;
-
-
 }
 
 pcb CPU::getCurrentProcess(void) {
@@ -23,48 +20,40 @@ int CPU::getClock(void)
 	return clock;
 }
 
-void CPU::execute(void)
+pcb CPU::execute(pcb p)
 {
 	if (currentProcess.pc == 0) {
 		clock++;//
-		//currentProcess = Scheduler.getNextProcess();
-		return;
+		currentProcess = p;
+		currentInstruction = p.pc->getNextInstruction();
+		currentRuntime = p.pc->getRuntime();
+		currentProcess.state = "RUN";
 	}
 	else {
 		if (currentRuntime <= 0) {
 			currentInstruction = currentProcess.pc->getNextInstruction();
 			currentRuntime = currentProcess.pc->getRuntime();
 		}
+
 		clock++;
+	}
+	if (currentInstruction.compare("CALC")) {
+		currentProcess.state = "RUN";
 		currentRuntime--;
+	} 
+	else if (currentInstruction.compare("I/O")) {
+		//send process to waiting queue
+		currentProcess.state = "WAIT";
+		return currentProcess; //TODO: scheduler checks state as it readmits the process
 	}
-
-	//REMOVE
-	while (true) {
-		currentInstruction = currentProcess.stack.front();
-		if (currentInstruction.compare("CALCULATE")) {
-			currentRuntime = currentProcess.pc->getRuntime();
-			while (currentRuntime > 0) {
-
-			}
-		}
+	else if (currentInstruction.compare("wait")) {
+		//wait semaphore
 	}
-}
-
-void CPU::execute(pcb p)
-{
-	//Loop should run continuously, and update the scheduler time quantum
-	while (true) {
-		currentInstruction = p.pc->getNextInstruction();
-		if (currentInstruction.compare("CALCULATE")) {
-			currentRuntime = currentProcess.pc->getRuntime();
-			while (currentRuntime>0) {
-				currentRuntime--;
-			}
-		}
-		else if (currentInstruction.compare("I/O")) {
-			
-		}
+	else if (currentInstruction.compare("signal")) {
+		//signal semaphore
+	}
+	else if (currentInstruction.compare("EXE")) {
+		currentProcess.state = "EXIT";
 	}
 
 }

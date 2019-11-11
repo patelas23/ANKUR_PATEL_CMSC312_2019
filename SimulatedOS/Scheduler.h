@@ -1,22 +1,23 @@
 #pragma once
 #include <string>
 #include <queue>
-#include <list>
+#include <vector>
 #include "Process.h"
 
 //Process Control Block
 //Maintains information about each process in the system
 struct pcb {
 	std::queue<std::string> stack;
-	std::string state = "NEW"; //(NEW), READY, WAITING, BLOCKED, RUN
+	std::string state = "NEW"; //(NEW), READY, WAITING, BLOCKED, RUN, EXIT
 	int memory = 0;
-	Process *pc = nullptr;
+	Process *pc = 0;
 	bool ioStatus = false; //No associated I/O by default
 };
 
 typedef struct {
 	int value;
 	//List<Process> list;
+	std::vector<Process*> list;
 } semaphore;
 
 
@@ -44,7 +45,8 @@ public:
 
 	//insert a new process into the Job Queue
 	void addProcess(Process p);
-	void addProcess(pcb b);
+	//Replace a partially completed process into the ready queue
+	void addProcess(pcb &b);
 
 	void resetQuantum(void);
 

@@ -106,16 +106,23 @@ int main()
 	programFile.close();
 
 	while (true) {
-		cpu.execute();
-		if (scheduler.quantum == 0) {
+		if (dispatcher.running.state != "RUN" || dispatcher.running.state == "EXIT") {
+			//Swap new process in for execution
+			dispatcher.running = cpu.execute(scheduler.getNextProcess());
+		}
+		scheduler.quantum--;
+		if (scheduler.quantum <= 0) {
 			dispatcher.prev = cpu.setCurrentProcess(scheduler.getNextProcess());
+
 			scheduler.addProcess(dispatcher.prev);
 		}
+		else {
+
+		}
+		if (dispatcher.running.state == "WAIT") {
+			//handle I/O exception
+		}
 	}
-
-	//Execute CPU
-
-
 
 	return 0;
 }

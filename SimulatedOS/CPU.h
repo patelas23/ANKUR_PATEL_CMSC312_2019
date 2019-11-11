@@ -10,15 +10,15 @@ public:
 	pcb getCurrentProcess(void);
 	//Returns current system time
 	int getClock(void);
-	//Begin cycle of execution
-	void execute(void);
-	//Preempt currently running process
-	void execute(pcb p);
+
+	//* Begin cycle of execution, or
+	//* preempt currently running process
+	pcb execute(pcb p);
 
 private:
 	int clock = 0;
 	pcb currentProcess;
 	std::string currentInstruction;
-	int currentRuntime;
+	int currentRuntime = 0;
 };
 
