@@ -28,12 +28,23 @@ void Scheduler::addProcess(Process p)
 	processBlock.pc = &p;
 	processBlock.stack = p.getInstructions();
 	processBlock.state = "NEW";
-	jobQueue.push(processBlock);
+	if (processBlock.memory < mem.remaining_mem) {
+		mem.remaining_mem -= processBlock.memory;
+		jobQueue.push(processBlock);
+	}
+	else {
+		deviceQueue.push(processBlock);
+	}
 }
 
 void Scheduler::addProcess(pcb &b) {
-	b.state = "READY";
-	readyQueue.push(b);
+	if (b.state == "EXIT") {
+		return;
+	}
+	else {
+		b.state = "READY";
+		readyQueue.push(b);
+	}
 }
 
 void Scheduler::resetQuantum(void)

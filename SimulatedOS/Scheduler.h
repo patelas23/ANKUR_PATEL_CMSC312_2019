@@ -10,7 +10,7 @@
 struct pcb {
 	std::queue<std::string> stack;
 	std::string state = "NEW"; //(NEW), READY, WAITING, BLOCKED, RUN, EXIT
-	Memory memory;
+	int memory;
 	Process *pc = 0;
 	bool ioStatus = false; //No associated I/O by default
 };
@@ -26,11 +26,13 @@ typedef struct {
 class Scheduler
 {
 private:
+	//System memory
+	Memory mem;
 	//processes in system
 	std::queue <pcb> jobQueue;
 	//processes residing in main memory
 	std::queue <pcb> readyQueue;
-	//processes waiting for I/O
+	//processes waiting for I/O or more memory
 	std::queue <pcb> deviceQueue;
 
 public:
