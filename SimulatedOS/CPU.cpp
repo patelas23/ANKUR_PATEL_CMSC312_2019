@@ -3,10 +3,12 @@
 pcb CPU::setCurrentProcess(pcb p)
 {
 	pcb temp = {};
+	temp.state = "EXIT";
 	if (currentProcess.state == "RUN") {
 		currentProcess.state = "WAITING";
 		currentProcess.pc->setInstruction(currentInstruction);
 		currentProcess.pc->setRuntime(currentRuntime);
+		currentRuntime = 0;
 		temp = currentProcess;
 	}
 	currentProcess = p;
@@ -27,18 +29,22 @@ pcb CPU::execute(pcb p)
 	if (currentProcess.pc == 0) {
 		clock++;
 		currentProcess = p;
-		currentInstruction = p.pc->getNextInstruction();
+		currentInstruction = p.stack.front();
 		if (currentInstruction.compare("EXE") == 0) {
 			currentProcess.state = "EXIT";
 			return currentProcess;
 		}
-		currentRuntime = p.pc->getRuntime();
+		currentRuntime = p.instructions.front();
+		p.instructions.pop();
 		currentProcess.state = "RUN";
 	}
 	else {
-		if (currentRuntime <= 0) {
-			currentInstruction = currentProcess.pc->getNextInstruction();
-			currentRuntime = currentProcess.pc->getRuntime();
+		if (!p.instructions.empty() && currentRuntime <= 0) {
+			currentInstruction = currentProcess.stack.front();
+			currentProcess.stack.pop();
+
+			currentRuntime = currentProcess.instructions.front();
+			currentProcess.instructions.pop();
 		}
 
 		clock++;

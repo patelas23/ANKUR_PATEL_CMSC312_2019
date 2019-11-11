@@ -111,7 +111,9 @@ int main()
 		scheduler.quantum--;
 		if (scheduler.quantum <= 0) {
 			dispatcher.prev = cpu.setCurrentProcess(scheduler.getNextProcess());
-			scheduler.addProcess(dispatcher.prev);
+			if (dispatcher.prev.state != "EXIT") {
+				scheduler.addProcess(dispatcher.prev);
+			}
 		}
 		else {
 		}

@@ -38,10 +38,14 @@ void Scheduler::addProcess(Process &p)
 	pcb processBlock;
 	processBlock.pc = &p;
 	processBlock.stack = p.getInstructions();
+	processBlock.instructions = p.getCycles();
 	processBlock.state = "NEW";
 	if (processBlock.memory < mem.remaining_mem) {
 		mem.remaining_mem -= processBlock.memory;
 		jobQueue.push(processBlock);
+	}
+	else if (p.getState() == "EXIT") {
+		
 	}
 	else {
 		deviceQueue.push(processBlock);
@@ -68,6 +72,7 @@ pcb Scheduler::getNextProcess(void)
 	pcb currentBlock;
 	currentBlock.state = "EXIT";
 	resetQuantum();
+
 	if (!readyQueue.empty()) {
 		currentBlock = readyQueue.front();
 		currentBlock.state = "READY";
@@ -76,7 +81,6 @@ pcb Scheduler::getNextProcess(void)
 	else {
 		return currentBlock;
 	}
-	readyQueue.push(currentBlock);
 	return currentBlock;
 }
 

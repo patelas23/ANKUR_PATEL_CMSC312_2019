@@ -9,8 +9,9 @@
 //Maintains information about each process in the system
 struct pcb {
 	std::queue<std::string> stack;
+	std::queue<int> instructions;
 	std::string state = "NEW"; //(NEW), READY, WAITING, BLOCKED, RUN, EXIT
-	int memory;
+	int memory = 0;
 	Process *pc = 0;
 	bool ioStatus = false; //No associated I/O by default
 };
@@ -36,7 +37,6 @@ private:
 	std::queue <pcb> deviceQueue;
 
 public:
-	static const int AVAILABLE_MEM = 256;
 	int quantum = 15;
 	//Implement counting semaphore
 

@@ -39,6 +39,11 @@ std::queue<std::string> Process::getInstructions(void)
 	return this->instructions;
 }
 
+std::queue<int> Process::getCycles(void)
+{
+	return this->runtime;
+}
+
 int Process::getRuntime(void) {
 	int r = runtime.front();
 	runtime.pop();

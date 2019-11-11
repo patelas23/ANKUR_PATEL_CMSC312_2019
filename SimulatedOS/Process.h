@@ -24,6 +24,7 @@ public:
 	std::string getname(void);
 	std::string getNextInstruction(void);
 	std::queue<std::string> getInstructions(void);
+	std::queue<int> getCycles(void);
 	int getRuntime(void);
 	std::string getState(void);
 	int getId(void);
