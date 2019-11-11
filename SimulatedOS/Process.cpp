@@ -4,13 +4,14 @@
 Process::Process() {
 	pid = 0;
 }
-Process::Process(std::string n, std::queue<std::string> i, std::queue<int> r, int id)
+Process::Process(std::string n, std::queue<std::string> i, std::queue<int> r, int id, int m)
 {
 	this->name = n;
 	this->instructions = i;
 	this->runtime = r;
 	this->pid = id;
 	this->state = "NEW";
+	this->memory = m;
 }
 
 

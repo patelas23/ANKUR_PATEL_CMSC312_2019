@@ -42,12 +42,14 @@ public:
 
 	Scheduler(void);
 
+	void init(void);
+
 	//Semaphore operations
 	void wait(semaphore *S);
 	void signal(semaphore* S);
 
 	//insert a new process into the Job Queue
-	void addProcess(Process p);
+	void addProcess(Process &p);
 	//Replace a partially completed process into the ready queue
 	void addProcess(pcb &b);
 

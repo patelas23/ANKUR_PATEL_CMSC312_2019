@@ -28,6 +28,10 @@ pcb CPU::execute(pcb p)
 		clock++;
 		currentProcess = p;
 		currentInstruction = p.pc->getNextInstruction();
+		if (currentInstruction.compare("EXE") == 0) {
+			currentProcess.state = "EXIT";
+			return currentProcess;
+		}
 		currentRuntime = p.pc->getRuntime();
 		currentProcess.state = "RUN";
 	}
@@ -39,22 +43,22 @@ pcb CPU::execute(pcb p)
 
 		clock++;
 	}
-	if (currentInstruction.compare("CALC")) {
+	if (currentInstruction.compare("CALC") == 0) {
 		currentProcess.state = "RUN";
 		currentRuntime--;
 	} 
-	else if (currentInstruction.compare("I/O")) {
+	else if (currentInstruction.compare("I/O") == 0) {
 		//send process to waiting queue
 		currentProcess.state = "WAIT";
 		return currentProcess; //TODO: scheduler checks state as it readmits the process
 	}
-	else if (currentInstruction.compare("wait")) {
+	else if (currentInstruction.compare("wait") == 0) {
 		//wait semaphore
 	}
-	else if (currentInstruction.compare("signal")) {
+	else if (currentInstruction.compare("signal") == 0) {
 		//signal semaphore
 	}
-	else if (currentInstruction.compare("EXE")) {
+	else if (currentInstruction.compare("EXE") == 0) {
 		currentProcess.state = "EXIT";
 	}
 

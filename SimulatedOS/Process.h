@@ -14,11 +14,12 @@ private:
 		int runtime;
 	};
 	int pid;
+	int memory = 1;
 
 	
 public:
 	Process();
-	Process(std::string n, std::queue<std::string> i, std::queue<int> r, int id);
+	Process(std::string n, std::queue<std::string> i, std::queue<int> r, int id, int m);
 
 	std::string getname(void);
 	std::string getNextInstruction(void);

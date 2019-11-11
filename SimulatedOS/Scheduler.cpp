@@ -4,6 +4,17 @@
 Scheduler::Scheduler(void) {
 }
 
+void Scheduler::init(void)
+{
+	pcb temp;
+	while (!jobQueue.empty()) {
+		temp = jobQueue.front();
+		temp.state = "READY";
+		readyQueue.push(temp);
+		jobQueue.pop();
+	}
+}
+
 void Scheduler::wait(semaphore* S)
 {
 	S->value--;
@@ -22,7 +33,7 @@ void Scheduler::signal(semaphore* S)
 	}
 }
 
-void Scheduler::addProcess(Process p)
+void Scheduler::addProcess(Process &p)
 {
 	pcb processBlock;
 	processBlock.pc = &p;
@@ -61,11 +72,6 @@ pcb Scheduler::getNextProcess(void)
 		currentBlock = readyQueue.front();
 		currentBlock.state = "READY";
 		readyQueue.pop();
-	}
-	else if (!jobQueue.empty()) {
-		currentBlock = jobQueue.front();
-		currentBlock.state = "READY";
-		jobQueue.pop();
 	}
 	else {
 		return currentBlock;

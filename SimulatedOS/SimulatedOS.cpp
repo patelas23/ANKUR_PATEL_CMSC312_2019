@@ -55,6 +55,7 @@ int main()
 	cin.ignore();
 	current_line.clear();
 
+
 	programFile.open("../Program Files/" + program_name + ".txt");
 	//programFile.open("../Files/this.txt");
 	
@@ -89,22 +90,20 @@ int main()
 		}
 		else {
 			programFile >> word;
-			cout << word << endl;
 			continue;
 		}
 	}
 
-	//Read program from file line-by-line
-
 	for (i = 0; i < num_of_processes; i++) {
 		//Create new processes based on the program
-		Process newProcess = Process(processName, instructions, runtime, i);
+		Process newProcess = Process(processName, instructions, runtime, i, processMemory);
 		scheduler.addProcess(newProcess);
 	}
 
 	programFile.close();
 
 	while (true) {
+		scheduler.init();
 		if (dispatcher.running.state != "RUN" || dispatcher.running.state == "EXIT") {
 			//Swap new process in for execution
 			dispatcher.running = cpu.execute(scheduler.getNextProcess());
@@ -115,10 +114,12 @@ int main()
 			scheduler.addProcess(dispatcher.prev);
 		}
 		else {
-
 		}
 		if (dispatcher.running.state == "WAIT") {
 			//handle I/O exception
+		}
+		else if (dispatcher.running.state.compare("EXIT") == 0) {
+
 		}
 	}
 
