@@ -70,5 +70,10 @@ pcb CPU::execute(pcb p)
 
 }
 
+void CPU::execute(void)
+{
+	this->execute(currentProcess);
+}
+
 
 

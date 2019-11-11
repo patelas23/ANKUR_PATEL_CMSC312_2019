@@ -4,27 +4,62 @@
 Scheduler::Scheduler(void) {
 }
 
+void Scheduler::init(void)
+{
+	pcb temp;
+	while (!jobQueue.empty()) {
+		temp = jobQueue.front();
+		temp.state = "READY";
+		readyQueue.push(temp);
+		jobQueue.pop();
+	}
+}
+
 void Scheduler::wait(semaphore* S)
 {
 	S->value--;
 	if (S->value < 0) {
-		
+		//S->list.push_back(); Push most recent process
+		//block()
 	}
 }
 
-void Scheduler::addProcess(Process p)
+void Scheduler::signal(semaphore* S)
+{
+	S->value++;
+	if (S->value <= 0) {
+		//remove process from list
+		//wakeup(process);
+	}
+}
+
+void Scheduler::addProcess(Process &p)
 {
 	pcb processBlock;
 	processBlock.pc = &p;
 	processBlock.stack = p.getInstructions();
+	processBlock.instructions = p.getCycles();
 	processBlock.state = "NEW";
-	jobQueue.push(processBlock);
+	if (processBlock.memory < mem.remaining_mem) {
+		mem.remaining_mem -= processBlock.memory;
+		jobQueue.push(processBlock);
+	}
+	else if (p.getState() == "EXIT") {
+		
+	}
+	else {
+		deviceQueue.push(processBlock);
+	}
 }
 
-//Function for replacing a partially completed process into the queue
-void Scheduler::addProcess(pcb b) {
-	b.state = "WAITING";
-	readyQueue.push(b);
+void Scheduler::addProcess(pcb &b) {
+	if (b.state == "EXIT") {
+		return;
+	}
+	else {
+		b.state = "READY";
+		readyQueue.push(b);
+	}
 }
 
 void Scheduler::resetQuantum(void)
@@ -35,21 +70,17 @@ void Scheduler::resetQuantum(void)
 pcb Scheduler::getNextProcess(void)
 {
 	pcb currentBlock;
+	currentBlock.state = "EXIT";
 	resetQuantum();
+
 	if (!readyQueue.empty()) {
 		currentBlock = readyQueue.front();
 		currentBlock.state = "READY";
 		readyQueue.pop();
 	}
-	else if (!jobQueue.empty()) {
-		currentBlock = jobQueue.front();
-		currentBlock.state = "READY";
-		jobQueue.pop();
-	}
 	else {
-		return;
+		return currentBlock;
 	}
-	readyQueue.push(currentBlock);
 	return currentBlock;
 }
 

@@ -101,12 +101,15 @@ int main()
 	}
 
 	programFile.close();
+	scheduler.init();
 
 	while (true) {
-		scheduler.init();
 		if (dispatcher.running.state != "RUN" || dispatcher.running.state == "EXIT") {
 			//Swap new process in for execution
 			dispatcher.running = cpu.execute(scheduler.getNextProcess());
+		}
+		else {
+			cpu.execute();
 		}
 		scheduler.quantum--;
 		if (scheduler.quantum <= 0) {
@@ -115,12 +118,14 @@ int main()
 				scheduler.addProcess(dispatcher.prev);
 			}
 		}
-		else {
-		}
+		
 		if (dispatcher.running.state == "WAIT") {
 			//handle I/O exception
 		}
 		else if (dispatcher.running.state.compare("EXIT") == 0) {
+
+		}
+		else {
 
 		}
 	}

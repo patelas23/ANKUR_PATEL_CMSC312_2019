@@ -14,6 +14,7 @@ public:
 	//* Begin cycle of execution, or
 	//* preempt currently running process
 	pcb execute(pcb p);
+	void execute(void);
 
 private:
 	int clock = 0;
