@@ -24,9 +24,12 @@ public class Main {
         int memory;
 
         Scanner s = new Scanner(System.in);
+        System.out.println("Programs:");
+        listPrograms();
+
         System.out.println("Enter name of the desired program, or type 'create' to write a new program:");
         programName = s.next();
-        if (programName.equals("create")) {//createProgram();
+        if (programName.equals("create")) {
             ProgramGenerator generator = new ProgramGenerator(s);
 
             System.out.println("Enter name of new program.");
@@ -37,9 +40,7 @@ public class Main {
             generator.createProgram(programName, memory);
         }
         //open program file (name.XML)
-        //read program file line by line
-        //TODO: create new process(es) based on program file
-        createProcesses();
+        createProcesses(programName);
         //add process(es) to scheduler
         //execute CPU continuously
         //Exit
@@ -48,11 +49,27 @@ public class Main {
 
 
     //Helper function for generating new processes
-    public static void createProcesses() {
-        System.out.println("Enter the number of processes to create");
+    public static void createProcesses(String name) {
+//        System.out.println("Enter the number of processes to create");
         //for (0->numOfProcesses)
         ////Process p = new Process
         //Return list of processes
+        ProcessGenerator.readXML(name);
+    }
+
+    public static void listPrograms() {
+        String[] names;
+        String name, filepath;
+
+        filepath = System.getProperty("user.dir") + "/Programs/";
+        File p = new File(filepath);
+        names = p.list();
+
+        assert names != null;
+        for(String filename: names) {
+            name = filename.substring(0, filename.lastIndexOf('.'));
+            System.out.println(name);
+        }
     }
 
 } //Main
