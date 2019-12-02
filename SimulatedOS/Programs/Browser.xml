@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Program>
+    <Name>Browser</Name>
+    <Memory>300</Memory>
+    <CALC>20</CALC>
+    <IO>15</IO>
+    <CALC>300</CALC>
+    <CALC>20</CALC>
+    <IO>40</IO>
+    <CALC>30</CALC>
+    <IO>20</IO>
+    <CALC>70</CALC>
+    <CALC>10</CALC>
+    <IO>50</IO>
+    <CALC>30</CALC>
+    <EXE/>
+</Program>
