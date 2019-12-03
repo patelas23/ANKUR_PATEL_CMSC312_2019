@@ -24,9 +24,13 @@ public class Scheduler {
         jobQueue.add(p);
     }
 
+    public void addBatch() {
+        //add list of processes to queue
+    }
+
     private void addToReady(Process p) {
         p.state = "READY";
-        readyQueue.add(b);
+        readyQueue.add(p);
     }
 
     public void addAllToReady() {

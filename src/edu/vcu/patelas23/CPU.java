@@ -10,7 +10,7 @@ public class CPU {
         clock = 0;
     }
 
-    public void execute(Scheduler.pcb p) {
+    public void execute(Process.pcb p) {
 
     }
     public Process execute(){
