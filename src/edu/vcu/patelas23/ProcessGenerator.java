@@ -1,5 +1,6 @@
 package edu.vcu.patelas23;
 
+import javafx.util.Pair;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -47,29 +48,37 @@ public class ProcessGenerator {
     }
 
     public static Process getProcess(Node t) {
+        Pair[] instructions;
         Process p = new Process();
-        String[] instructions;
-        int length;
+        String instruction;
+//        String[] instructions;
+        int length, runtime;
+//        int[] runtimes;
 
+        Node child;
         NodeList nList = t.getChildNodes();
         length = nList.getLength();
 
         p.setName(nList.item(0).getNodeValue());
         p.setMemory(Integer.parseInt(nList.item(1).getNodeValue()));
+        
+        //create array of javatuples <String, int> :: <Instruction, Runtime> pair
+        instructions = new Pair[length - 2];
+        Pair<String, Integer> pair = Pair.with("CALC", 20);
 
         //Iterate over the rest of the nodes to generate script
         for (int i = 2; i < length; i++) {
-            
+            //By default, any instruction will employ the CPU for at least 1 cycle
+            runtime = 1;
+            child = nList.item(i);
+            instruction = child.getLocalName();
+
+            //CALC and I/O instructions have variable CPU usage
+            if (instruction.equals("CALC") || instruction.equals("I/O")) {
+                runtime = Integer.parseInt(child.getTextContent());
+            }
+            instructions[i - 2] = Pair.with(instruction, runtime);
         }
-
-
-        if (t.getNodeType() == Node.ELEMENT_NODE) {
-            Element e = (Element) t;
-//            p.setName(getElementValue("Name", e));
-//            p.setInstructions
-
-        }
-
         return p;
     }
 
