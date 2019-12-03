@@ -31,8 +31,8 @@ public class ProcessGenerator {
             document.getDocumentElement().normalize();
 //            System.out.println("Root element: "+document.getDocumentElement().getNodeName());
             root = document.getDocumentElement();
-            template = root.getChildNodes();
-            getProcess(template);
+//            template = root.getChildNodes();
+            getProcess(root);
 
 
         } catch (ParserConfigurationException | IOException | SAXException e) {
@@ -51,9 +51,7 @@ public class ProcessGenerator {
         Pair[] instructions;
         Process p = new Process();
         String instruction;
-//        String[] instructions;
         int length, runtime;
-//        int[] runtimes;
 
         Node child;
         NodeList nList = t.getChildNodes();
@@ -61,7 +59,7 @@ public class ProcessGenerator {
 
         p.setName(nList.item(0).getNodeValue());
         p.setMemory(Integer.parseInt(nList.item(1).getNodeValue()));
-        
+
         //create array of javatuples <String, int> :: <Instruction, Runtime> pair
         instructions = new Pair[length - 2];
         Pair<String, Integer> pair = Pair.with("CALC", 20);
