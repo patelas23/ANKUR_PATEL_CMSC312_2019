@@ -42,6 +42,7 @@ public class Main {
         //open program file (name.XML)
         createProcesses(programName);
         //add process(es) to scheduler
+
         //execute CPU continuously
         //Exit
         s.close();
@@ -54,7 +55,7 @@ public class Main {
         //for (0->numOfProcesses)
         ////Process p = new Process
         //Return list of processes
-        ProcessGenerator.readXML(name);
+        ProcessGenerator.getTemplate(name);
     }
 
     public static void listPrograms() {

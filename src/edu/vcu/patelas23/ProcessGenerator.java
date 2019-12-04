@@ -40,7 +40,7 @@ public class ProcessGenerator {
     }
 
     //Generates initial template process from XML file
-    private static Process getTemplate(String name) {
+    public static Process getTemplate(String name) {
         ArrayList<Pair<String, Integer>> stack;
         Process p = new Process();
         String instruction;
@@ -56,7 +56,8 @@ public class ProcessGenerator {
         p.setMemory(Integer.parseInt(nList.item(1).getNodeValue()));
 
         //create arraylist of Pairs <String, int> :: <Instruction, Runtime>
-        stack = new ArrayList<Pair<String, Integer>>();
+//        stack = new ArrayList<Pair<String, Integer>>();
+        stack = getScript
 
         //Iterate over the rest of the nodes to generate script
         for (int i = 2; i < length; i++) {
@@ -76,17 +77,58 @@ public class ProcessGenerator {
         return p;
     }
 
+    private static ArrayList<Pair<String, Integer>> getScript(NodeList nList) {
+        ArrayList<Pair<String, Integer>> stack = new ArrayList<>();
+        int runtime;
+        int length = nList.getLength();
+        Node child;
+        String instruction;
+
+        for (int i =2; i<length; i++) {
+            child = nList.item(i);
+            instruction = child.getLocalName();
+
+            runtime = 1;
+
+            if(instruction.equals("CALC") || instruction.equals("I/O")) {
+                runtime = Integer.parseInt(child.getTextContent());
+            }
+            stack.add(new Pair<String, Integer>(instruction, runtime));
+        }
+        return stack;
+    }
+
+    public static ArrayList<Pair<String, Integer>> getRandomScript(NodeList nList) {
+        ArrayList<Pair<String, Integer>> stack = new ArrayList<>();
+
+        int runtime;
+        int length = nList.getLength();
+        Node child;
+        String instruction;
+
+        for (int i =2; i<length; i++) {
+            child = nList.item(i);
+            instruction = child.getLocalName();
+
+            runtime = 1;
+
+            //Randomize runtime of each operation
+            if(instruction.equals("CALC") || instruction.equals("I/O")) {
+                runtime = (int) (Math.random() * (runtime / 2) + runtime);
+            }
+            stack.add(new Pair<String, Integer>(instruction, runtime));
+        }
+        return stack;
+    }
+
     //Generate subsequent processes from template
     public static Process getProcess(Process p) {
         return p;
     }
 
-    public static Process[] generateProcesses(int n) {
-        Process template;
+    public static Process[] generateProcesses(Process template, int n) {
         Process[] batch;
         batch = new Process[n];
-
-
 
         for(int i=0;i<n;i++) {
             //create processes with randomized values
