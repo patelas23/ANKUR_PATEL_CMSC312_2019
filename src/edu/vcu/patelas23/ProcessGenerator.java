@@ -43,37 +43,21 @@ public class ProcessGenerator {
     public static Process getTemplate(String name) {
         ArrayList<Pair<String, Integer>> stack;
         Process p = new Process();
-        String instruction;
-        int length, runtime;
-        Node child;
 
         NodeList nList = readXML(name);
         assert nList != null;
 
-        length = nList.getLength();
-
         p.setName(nList.item(0).getNodeValue());
         p.setMemory(Integer.parseInt(nList.item(1).getNodeValue()));
 
-        //create arraylist of Pairs <String, int> :: <Instruction, Runtime>
-//        stack = new ArrayList<Pair<String, Integer>>();
-        stack = getScript
-
-        //Iterate over the rest of the nodes to generate script
-        for (int i = 2; i < length; i++) {
-
-            child = nList.item(i);
-            instruction = child.getLocalName();
-
-            //By default, any instruction will employ the CPU for at least 1 cycle
-            runtime = 1;
-            //CALC and I/O instructions have variable CPU usage
-            if (instruction.equals("CALC") || instruction.equals("I/O")) {
-                runtime = Integer.parseInt(child.getTextContent());
-            }
-            stack.add(new Pair<String, Integer>(instruction, runtime));
-        }
+        stack = getScript(nList);
         p.setStack(stack);
+
+        return p;
+    }
+
+    //Generate subsequent processes from template
+    public static Process getProcess(Process p) {
         return p;
     }
 
@@ -119,11 +103,6 @@ public class ProcessGenerator {
             stack.add(new Pair<String, Integer>(instruction, runtime));
         }
         return stack;
-    }
-
-    //Generate subsequent processes from template
-    public static Process getProcess(Process p) {
-        return p;
     }
 
     public static Process[] generateProcesses(Process template, int n) {
