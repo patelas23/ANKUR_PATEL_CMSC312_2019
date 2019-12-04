@@ -63,7 +63,7 @@ public class Process {
     public void setMemory(int m) {
         this.memory = m;
     }
-    public void setStack(Pair<String, Integer>[] s) {
+    public void setStack(ArrayList<Pair<String, Integer>> s) {
         this.stack = s;
     }
 

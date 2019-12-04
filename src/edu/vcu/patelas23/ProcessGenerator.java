@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ProcessGenerator {
     //Read XML file
@@ -40,7 +41,7 @@ public class ProcessGenerator {
 
     //Generates initial template process from XML file
     private static Process getTemplate(String name) {
-        Pair<String, Integer>[] instructions;
+        ArrayList<Pair<String, Integer>> stack;
         Process p = new Process();
         String instruction;
         int length, runtime;
@@ -54,8 +55,8 @@ public class ProcessGenerator {
         p.setName(nList.item(0).getNodeValue());
         p.setMemory(Integer.parseInt(nList.item(1).getNodeValue()));
 
-        //create array of Pairs <String, int> :: <Instruction, Runtime>
-        instructions = new Pair<String, Integer>[length - 2];
+        //create arraylist of Pairs <String, int> :: <Instruction, Runtime>
+        stack = new ArrayList<Pair<String, Integer>>();
 
         //Iterate over the rest of the nodes to generate script
         for (int i = 2; i < length; i++) {
@@ -69,9 +70,9 @@ public class ProcessGenerator {
             if (instruction.equals("CALC") || instruction.equals("I/O")) {
                 runtime = Integer.parseInt(child.getTextContent());
             }
-            instructions[i - 2] = new Pair<String, Integer>(instruction, runtime);
+            stack.add(new Pair<String, Integer>(instruction, runtime));
         }
-        p.setStack(instructions);
+        p.setStack(stack);
         return p;
     }
 
