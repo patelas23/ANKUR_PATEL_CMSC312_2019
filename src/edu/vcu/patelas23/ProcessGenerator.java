@@ -16,14 +16,13 @@ import java.io.IOException;
 public class ProcessGenerator {
     //Read XML file
     //create processes based on it
-    public static void readXML(String name) {
+    private static NodeList readXML(String name) {
         String filepath = System.getProperty("user.dir") + "/Programs/" + name + ".xml";
         File xmlFile = new File(filepath);
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dbBuilder;
         Node root;
-        NodeList instructions, nodes, template;
 
         try {
             dbBuilder = dbFactory.newDocumentBuilder();
@@ -31,59 +30,70 @@ public class ProcessGenerator {
             document.getDocumentElement().normalize();
 //            System.out.println("Root element: "+document.getDocumentElement().getNodeName());
             root = document.getDocumentElement();
-//            template = root.getChildNodes();
-            getProcess(root);
-
+            return root.getChildNodes();
 
         } catch (ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
         }
-
-
+        return null;
     }
 
-    public void generateProcesses() {
-
-        //create process objects based on file attributes
-    }
-
-    public static Process getProcess(Node t) {
-        Pair[] instructions;
+    //Generates initial template process from XML file
+    private static Process getTemplate(String name) {
+        Pair<String, Integer>[] instructions;
         Process p = new Process();
         String instruction;
         int length, runtime;
-
         Node child;
-        NodeList nList = t.getChildNodes();
+
+        NodeList nList = readXML(name);
+        assert nList != null;
+
         length = nList.getLength();
 
         p.setName(nList.item(0).getNodeValue());
         p.setMemory(Integer.parseInt(nList.item(1).getNodeValue()));
 
-        //create array of javatuples <String, int> :: <Instruction, Runtime> pair
-        instructions = new Pair[length - 2];
-        Pair<String, Integer> pair = Pair.with("CALC", 20);
+        //create array of Pairs <String, int> :: <Instruction, Runtime>
+        instructions = new Pair<String, Integer>[length - 2];
 
         //Iterate over the rest of the nodes to generate script
         for (int i = 2; i < length; i++) {
-            //By default, any instruction will employ the CPU for at least 1 cycle
-            runtime = 1;
+
             child = nList.item(i);
             instruction = child.getLocalName();
 
+            //By default, any instruction will employ the CPU for at least 1 cycle
+            runtime = 1;
             //CALC and I/O instructions have variable CPU usage
             if (instruction.equals("CALC") || instruction.equals("I/O")) {
                 runtime = Integer.parseInt(child.getTextContent());
             }
-            instructions[i - 2] = Pair.with(instruction, runtime);
+            instructions[i - 2] = new Pair<String, Integer>(instruction, runtime);
         }
+        p.setStack(instructions);
         return p;
     }
 
-    private static String[] getElementValue(String tag, Element element) {
-        NodeList nodes = element.getElementsByTagName(tag);
-//        Node node = (Node) nodes.item(0);
-
-        return node.getNodeValue();
+    //Generate subsequent processes from template
+    public static Process getProcess(Process p) {
+        return p;
     }
+
+    public static Process[] generateProcesses(int n) {
+        Process template;
+        Process[] batch;
+        batch = new Process[n];
+
+
+
+        for(int i=0;i<n;i++) {
+            //create processes with randomized values
+//            batch[i] =
+
+        }
+
+        return batch;
+    }
+
 }

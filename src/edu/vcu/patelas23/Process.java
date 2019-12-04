@@ -1,5 +1,9 @@
 package edu.vcu.patelas23;
 
+import javafx.util.Pair;
+
+import java.util.ArrayList;
+
 public class Process {
     static int globalID = 0;
 
@@ -17,8 +21,9 @@ public class Process {
 
     private String name;
     private String[] instructions;
+//    private Pair<String, Integer>[] stack;
+    private ArrayList<Pair<String, Integer>> stack;
     String state;
-    private int[] runtimes;
     private int id;
     private int memory;
     private pcb block;
@@ -28,11 +33,17 @@ public class Process {
         globalID++;
     }
 
-    public Process(String s, String[] i, int[] r, int mem) {
+
+    public Process(String n, int m) {
+        super();
+        name = n;
+        memory = m;
+    }
+
+    public Process(String s, String[] i, int mem) {
         super();
         name = s;
         instructions = i;
-        runtimes = r;
         memory = mem;
     }
 
@@ -51,6 +62,9 @@ public class Process {
     }
     public void setMemory(int m) {
         this.memory = m;
+    }
+    public void setStack(Pair<String, Integer>[] s) {
+        this.stack = s;
     }
 
     public void addMaskableInterrupt() {
