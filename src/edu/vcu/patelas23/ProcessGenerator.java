@@ -29,7 +29,7 @@ public class ProcessGenerator {
             dbBuilder = dbFactory.newDocumentBuilder();
             Document document = dbBuilder.parse(xmlFile);
             document.getDocumentElement().normalize();
-//            System.out.println("Root element: "+document.getDocumentElement().getNodeName());
+
             root = document.getDocumentElement();
             return root.getChildNodes();
 
@@ -40,17 +40,14 @@ public class ProcessGenerator {
     }
 
     //Generates initial template process from XML file
-    public static Process getTemplate(String name) {
+    public static Process getTemplate(NodeList XMLProcess) {
         ArrayList<Pair<String, Integer>> stack;
         Process p = new Process();
 
-        NodeList nList = readXML(name);
-        assert nList != null;
+        p.setName(XMLProcess.item(0).getNodeValue());
+        p.setMemory(Integer.parseInt(XMLProcess.item(1).getNodeValue()));
 
-        p.setName(nList.item(0).getNodeValue());
-        p.setMemory(Integer.parseInt(nList.item(1).getNodeValue()));
-
-        stack = getScript(nList);
+        stack = getScript(XMLProcess);
         p.setStack(stack);
 
         return p;
@@ -58,6 +55,12 @@ public class ProcessGenerator {
 
     //Generate subsequent processes from template
     public static Process getProcess(Process p) {
+        ArrayList<Pair<String, Integer>> s;
+        s = p.getStack();
+        //randomize each value of s
+        for (Pair<String, Integer> pair : s) {
+
+        }
         return p;
     }
 
@@ -68,13 +71,13 @@ public class ProcessGenerator {
         Node child;
         String instruction;
 
-        for (int i =2; i<length; i++) {
+        for (int i = 2; i < length; i++) {
             child = nList.item(i);
             instruction = child.getLocalName();
 
             runtime = 1;
 
-            if(instruction.equals("CALC") || instruction.equals("I/O")) {
+            if (instruction.equals("CALC") || instruction.equals("I/O")) {
                 runtime = Integer.parseInt(child.getTextContent());
             }
             stack.add(new Pair<String, Integer>(instruction, runtime));
@@ -82,34 +85,62 @@ public class ProcessGenerator {
         return stack;
     }
 
-    public static ArrayList<Pair<String, Integer>> getRandomScript(NodeList nList) {
-        ArrayList<Pair<String, Integer>> stack = new ArrayList<>();
+    public Pair<String, Integer> getInstruction(Node n) {
+        Pair<String, Integer> instruction;
+        String label;
+        int runtime = 1;
 
-        int runtime;
-        int length = nList.getLength();
-        Node child;
-        String instruction;
-
-        for (int i =2; i<length; i++) {
-            child = nList.item(i);
-            instruction = child.getLocalName();
-
-            runtime = 1;
-
-            //Randomize runtime of each operation
-            if(instruction.equals("CALC") || instruction.equals("I/O")) {
-                runtime = (int) (Math.random() * (runtime / 2) + runtime);
-            }
-            stack.add(new Pair<String, Integer>(instruction, runtime));
+        label = n.getLocalName();
+        if(label.equals("CALC")) {
+            runtime = Integer.parseInt(n.getTextContent());
         }
-        return stack;
+        else if(label.equals("I/O")) {
+            runtime = 1;
+            //TODO: Generate interrupt
+        }
+        instruction = new Pair<String, Integer>(label, runtime);
+        return instruction;
     }
 
-    public static Process[] generateProcesses(Process template, int n) {
-        Process[] batch;
-        batch = new Process[n];
+    public Pair<String, Integer> getRandomInstruction(Node n) {
+        Pair<String, Integer> instruction;
+        String label;
+        int runtime = 1;
 
-        for(int i=0;i<n;i++) {
+        label = n.getLocalName();
+        if(label.equals("CALC")) {
+            //Randomize runtime
+            runtime = Integer.parseInt(n.getTextContent());
+            runtime = (int)(Math.random() + 0.5 * runtime);
+        }
+        else if(label.equals("I/O")) {
+            runtime = 1;
+            //TODO: Generate interrupt
+        }
+        else if(label.equals("EXE")) {
+            runtime = 1;
+        }
+        else{
+            label = "EXE";
+            runtime = 1;
+        }
+        instruction = new Pair<String, Integer>(label, runtime);
+        return instruction;
+    }
+
+
+    public static Process[] generateProcesses(Process t, int n, String name) {
+        Process[] batch;
+        Process template;
+        batch = new Process[n];
+        NodeList XMLProcess;
+
+        XMLProcess = readXML(name);
+        assert XMLProcess != null;
+
+        template = getTemplate(XMLProcess);
+
+        for (int i = 0; i < n; i++) {
             //create processes with randomized values
 //            batch[i] =
 

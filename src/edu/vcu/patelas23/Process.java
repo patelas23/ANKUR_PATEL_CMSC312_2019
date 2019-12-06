@@ -53,6 +53,9 @@ public class Process {
     public int getId() {
         return id;
     }
+    public ArrayList<Pair<String, Integer>> getStack() {
+        return stack;
+    }
 
     public void setName(String n) {
         this.name = n;
