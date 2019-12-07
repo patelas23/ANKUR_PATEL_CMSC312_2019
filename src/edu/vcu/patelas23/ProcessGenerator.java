@@ -129,7 +129,7 @@ public class ProcessGenerator {
     }
 
 
-    public static Process[] generateProcesses(Process t, int n, String name) {
+    public static Process[] generateProcesses(int n, String name) {
         Process[] batch;
         Process template;
         batch = new Process[n];

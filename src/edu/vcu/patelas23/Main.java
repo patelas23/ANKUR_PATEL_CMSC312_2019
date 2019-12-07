@@ -20,9 +20,12 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        String programName, instruction = "";
-        int memory;
+        CPU cpu;
 
+        String programName, instruction = "";
+        int memory, numProcesses, systemCycles;
+
+        Scheduler scheduler = new Scheduler();
         Scanner s = new Scanner(System.in);
         System.out.println("Programs:");
         listPrograms();
@@ -39,23 +42,28 @@ public class Main {
             //Create new program file
             generator.createProgram(programName, memory);
         }
-        //open program file (name.XML)
-        createProcesses(programName);
-        //add process(es) to scheduler
+
+        System.out.println("Enter the number of processes to create:");
+        numProcesses = s.nextInt();
+
+        //Generate specified number of processes based on chosen program template
+        //and add them to scheduler
+        scheduler.addBatch(ProcessGenerator.generateProcesses(numProcesses, programName));
+
+        System.out.println("Enter number number of cycles for CPU to execute (10000 ~ 250 000):");
+        systemCycles = s.nextInt();
 
         //execute CPU continuously
+        //TODO: finish CPU execution
+        while(systemCycles>0) {
+            cpu.execute();
+            systemCycles--;
+        }
+
+        //TODO: finish toString implementation
+        System.out.println(cpu.toString());
         //Exit
         s.close();
-    }
-
-
-    //Helper function for generating new processes
-    public static void createProcesses(String name) {
-//        System.out.println("Enter the number of processes to create");
-        //for (0->numOfProcesses)
-        ////Process p = new Process
-        //Return list of processes
-        ProcessGenerator.getTemplate(name);
     }
 
     public static void listPrograms() {

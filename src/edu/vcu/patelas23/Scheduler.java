@@ -1,4 +1,5 @@
 package edu.vcu.patelas23;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -24,8 +25,9 @@ public class Scheduler {
         jobQueue.add(p);
     }
 
-    public void addBatch() {
+    public void addBatch(Process[] pArray) {
         //add list of processes to queue
+        jobQueue.addAll(Arrays.asList(pArray));
     }
 
     private void addToReady(Process p) {
