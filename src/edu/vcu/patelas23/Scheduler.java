@@ -11,14 +11,14 @@ public class Scheduler {
 
     private Queue<Process> processQueue;
 
+    private int quantum;
+
     public Scheduler() {
         //instantiate queues
         jobQueue = new LinkedList<>();
         readyQueue = new LinkedList<>();
         waitingQueue = new LinkedList<>();
-    }
-    public void schedule() {
-        //Check and prepare all queues
+        quantum = 5;
     }
 
     public void addProcess(Process p) {
@@ -39,6 +39,12 @@ public class Scheduler {
         for (Process process:jobQueue) {
             addToReady(process);
         }
+    }
+
+    //Update round-robin quantum on each execute() cycle
+    public int getQuantum() {
+        quantum--;
+        return quantum;
     }
 
 

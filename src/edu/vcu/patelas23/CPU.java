@@ -1,46 +1,66 @@
 package edu.vcu.patelas23;
 
-public class CPU {
-    //round robin time quantum should interrupt CPU processing
-    private int clock;
+import javafx.util.Pair;
 
+public class CPU {
+    private int clock;
+    private Scheduler scheduler;
     private Process currentProcess;
 
     public CPU() {
         clock = 0;
-        Scheduler scheduler = new Scheduler();
-        Dispatcher dispatcher = new Dispatcher();
+        scheduler = new Scheduler();
     }
 
     public void load(Process[] pArray) {
+        //Add processes to scheduler
+        scheduler.addBatch(pArray);
 
+        //Initialize scheduler queues
+        scheduler.addAllToReady();
     }
 
     public void load(Process p) {
-
+        scheduler.addProcess(p);
     }
 
-    public void execute(Process.pcb p) {
+    public void execute() {
+        Pair<String, Integer> instruction, partialInstruction;
+        int runtime;
+        //Peek scheduler to determine next process
+        if (scheduler.getQuantum() == 0) {
+            //get new process
+        } else {
+            instruction = currentProcess.getNextInstruction();
+            if(instruction.getKey().equals("CALC")) {
+                //Calculate
+                runtime = (int) instruction.getValue();
+                runtime--;
+                //partially executed calculate statement
+                partialInstruction = new Pair<String, Integer>(instruction.getKey(), runtime);
+            }
+            else if (instruction.getKey().equals("I/O")) {
+                //add to waiting queue
+                //wait for I/O signal
+            }
+            else if (instruction.getKey().equals("EXE")) {
+                //add process to exit queue
+            }
 
+        }
 
-    }
-
-
-    public Process execute(){
-        //Check interrupt handler
-        //execute next instruction from current process (in dispatcher)
+        //increase clock
         clock++;
-        //update state of process if applicable
-        return currentProcess;
     }
 
     public int getClock() {
         return clock;
     }
 
-    public void setCurrentProcess() {
-
+    public void setCurrentProcess(Process p) {
+        this.currentProcess = p;
     }
+
     public Process getCurrentProcess() {
         return this.currentProcess;
     }

@@ -8,11 +8,10 @@ public class Process {
     static int globalID = 0;
 
     static class pcb {
-        int pc = 0;
+        int pc = -1;
         int memory = 0;
         String name;
         String[] instructions;
-        int[] runtimes;
         String state = "NEW";
         public pcb() {
 
@@ -60,14 +59,21 @@ public class Process {
     public void setName(String n) {
         this.name = n;
     }
-    public void setInstructions(String[] arr) {
-        this.instructions = arr;
-    }
     public void setMemory(int m) {
         this.memory = m;
     }
     public void setStack(ArrayList<Pair<String, Integer>> s) {
         this.stack = s;
+    }
+
+    public Pair<String, Integer> getNextInstruction() {
+        block.pc++;
+        return stack.get(block.pc);
+    }
+
+    public void setLastInstruction(Pair<String, Integer> partialInstruction) {
+        stack.remove(stack.size()-1);
+        stack.add(partialInstruction);
     }
 
     public void addMaskableInterrupt() {
