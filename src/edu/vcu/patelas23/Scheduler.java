@@ -47,5 +47,16 @@ public class Scheduler {
         return quantum;
     }
 
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (Process p: readyQueue) {
+            result.append(p.getName());
+            result.append("\n");
+            result.append(p.getMemory());
+            result.append("\n");
+        }
+        return result.toString();
+    }
+
 
 }

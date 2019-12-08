@@ -2,7 +2,6 @@ package edu.vcu.patelas23;
 
 import javafx.util.Pair;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -21,17 +20,29 @@ public class ProcessGenerator {
         String filepath = System.getProperty("user.dir") + "/Programs/" + name + ".xml";
         File xmlFile = new File(filepath);
 
+        //For opening.reading file
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dbBuilder;
+
+        //For parsing XML
         Node root;
+        NodeList nList;
 
         try {
             dbBuilder = dbFactory.newDocumentBuilder();
             Document document = dbBuilder.parse(xmlFile);
             document.getDocumentElement().normalize();
 
-            root = document.getDocumentElement();
-            return root.getChildNodes();
+//            root = document.getDocumentElement();
+
+            nList = document.getChildNodes();
+            root = nList.item(0).getParentNode();
+
+
+            System.out.println("First Node: " + nList.item(0).getTextContent());
+            System.out.println("Root thing: " + root.getTextContent());
+
+            return nList;
 
         } catch (ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();

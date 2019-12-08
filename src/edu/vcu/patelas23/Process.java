@@ -70,6 +70,9 @@ public class Process {
         block.pc++;
         return stack.get(block.pc);
     }
+    public int getMemory() {
+        return memory;
+    }
 
     public void setLastInstruction(Pair<String, Integer> partialInstruction) {
         stack.remove(stack.size()-1);

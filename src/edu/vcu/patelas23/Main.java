@@ -31,15 +31,17 @@ public class Main {
         listPrograms();
 
         System.out.println("Enter name of the desired program, or type 'create' to write a new program:");
-        programName = s.next();
+        programName = s.nextLine();
+
         if (programName.equals("create")) {
             ProgramGenerator generator = new ProgramGenerator(s);
 
             System.out.println("Enter name of new program.");
-            programName = s.next();
+            programName = s.nextLine();
             System.out.println("Enter the amount of memory required by the program.");
             memory = s.nextInt();
             //Create new program file
+            System.out.println("Enter program script:");
             generator.createProgram(programName, memory);
         }
 
@@ -56,12 +58,14 @@ public class Main {
         //execute CPU continuously
         //TODO: finish CPU execution
         while(systemCycles>0) {
-            cpu.execute();
+//            cpu.execute();
+            System.out.println("Executed");
             systemCycles--;
         }
 
         //TODO: finish toString implementation
-        System.out.println(cpu.toString());
+//        System.out.println(cpu.toString());
+        System.out.println(scheduler.toString());
         //Exit
         s.close();
     }
