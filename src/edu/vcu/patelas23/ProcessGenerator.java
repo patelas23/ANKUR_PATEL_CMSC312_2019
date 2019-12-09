@@ -2,6 +2,7 @@ package edu.vcu.patelas23;
 
 import javafx.util.Pair;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -14,9 +15,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ProcessGenerator {
-    //Read XML file
-    //create processes based on it
-    private static NodeList readXML(String name) {
+
+
+    //Read XML file, returning process XML root node
+    private static Node readXML(String name) {
         String filepath = System.getProperty("user.dir") + "/Programs/" + name + ".xml";
         File xmlFile = new File(filepath);
 
@@ -25,7 +27,7 @@ public class ProcessGenerator {
         DocumentBuilder dbBuilder;
 
         //For parsing XML
-        Node root;
+        Node root, XMLProcess;
         NodeList nList;
 
         try {
@@ -33,32 +35,71 @@ public class ProcessGenerator {
             Document document = dbBuilder.parse(xmlFile);
             document.getDocumentElement().normalize();
 
-//            root = document.getDocumentElement();
+            //Obtain root node from <Program>
+            nList = document.getElementsByTagName("Program");
+            root = nList.item(0);
 
-            nList = document.getChildNodes();
-            root = nList.item(0).getParentNode();
-
-
-            System.out.println("First Node: " + nList.item(0).getTextContent());
-            System.out.println("Root thing: " + root.getTextContent());
-
-            return nList;
-
+            return root;
         } catch (ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
         }
         return null;
     }
 
+    //Return text content of specified element
+    private static String getContent(String tag, Element e) {
+        NodeList nList = e.getElementsByTagName(tag).item(0).getChildNodes();
+        Node node = (Node) nList.item(0);
+        return node.getNodeValue();
+    }
+    private static Pair<String, Integer> getInstruction(Node n) {
+        Pair<String, Integer> instruction;
+        String label;
+        int runtime = 1;
+
+        label = n.getNodeName();
+        if (label.equals("CALC")) {
+            runtime = Integer.parseInt(n.getTextContent());
+        } else if (label.equals("I/O")) {
+            runtime = 1;
+            //TODO: Generate interrupt
+        }
+        instruction = new Pair<String, Integer>(label, runtime);
+        return instruction;
+    }
+
+
+    private static ArrayList<Pair<String, Integer>> getScriptC(Element e) {
+        ArrayList<Pair<String, Integer>> script = new ArrayList<>();
+        Pair<String, Integer> instruction;
+        NodeList scriptNode = e.getElementsByTagName("Script").item(0).getChildNodes();
+        Node instructionNode = (Node) scriptNode.item(0);
+
+        while (instructionNode.getNextSibling() != null) {
+            if (instructionNode.getNodeType() == Node.ELEMENT_NODE) {
+                System.out.println("has sibling" + instructionNode.getTextContent());
+                //TODO: remove this
+//                instruction = new Pair<String, Integer>("CALC", 1);
+                instruction = getInstruction(instructionNode);
+                script.add(instruction);
+            }
+            instructionNode = instructionNode.getNextSibling();
+        }
+        return script;
+    }
+
     //Generates initial template process from XML file
-    public static Process getTemplate(NodeList XMLProcess) {
-        ArrayList<Pair<String, Integer>> stack;
+    public static Process getTemplate(Node XMLProcess) {
+        ArrayList<Pair<String, Integer>> stack = new ArrayList<>();
         Process p = new Process();
+        Element element = (Element) XMLProcess;
 
-        p.setName(XMLProcess.item(0).getNodeValue());
-        p.setMemory(Integer.parseInt(XMLProcess.item(1).getNodeValue()));
+        p.setName(getContent("Name", element));
+        p.setMemory(Integer.parseInt(getContent("Memory", element)));
 
-        stack = getScript(XMLProcess);
+        //add each node within "script" to
+//        stack = getScriptC(element);
+        getScriptC(element);
         p.setStack(stack);
 
         return p;
@@ -75,7 +116,18 @@ public class ProcessGenerator {
         return p;
     }
 
-    private static ArrayList<Pair<String, Integer>> getScript(NodeList nList) {
+    //TODO: Finish new implementation of script loader
+    private static ArrayList<Pair<String, Integer>> getScript(Node XMLProcess) {
+        int runtime;
+        NodeList nodes;
+        nodes = XMLProcess.getChildNodes();
+        System.out.println("Instruction: " + nodes.item(0).getNodeValue());
+        //Find all nodes with either CALC, IO, or EXE
+
+        return null;
+    }
+
+    private static ArrayList<Pair<String, Integer>> getScriptB(NodeList nList) {
         ArrayList<Pair<String, Integer>> stack = new ArrayList<>();
         int runtime;
         int length = nList.getLength();
@@ -96,22 +148,7 @@ public class ProcessGenerator {
         return stack;
     }
 
-    public Pair<String, Integer> getInstruction(Node n) {
-        Pair<String, Integer> instruction;
-        String label;
-        int runtime = 1;
 
-        label = n.getLocalName();
-        if(label.equals("CALC")) {
-            runtime = Integer.parseInt(n.getTextContent());
-        }
-        else if(label.equals("I/O")) {
-            runtime = 1;
-            //TODO: Generate interrupt
-        }
-        instruction = new Pair<String, Integer>(label, runtime);
-        return instruction;
-    }
 
     public Pair<String, Integer> getRandomInstruction(Node n) {
         Pair<String, Integer> instruction;
@@ -119,19 +156,16 @@ public class ProcessGenerator {
         int runtime = 1;
 
         label = n.getLocalName();
-        if(label.equals("CALC")) {
+        if (label.equals("CALC")) {
             //Randomize runtime
             runtime = Integer.parseInt(n.getTextContent());
-            runtime = (int)(Math.random() + 0.5 * runtime);
-        }
-        else if(label.equals("I/O")) {
+            runtime = (int) (Math.random() + 0.5 * runtime);
+        } else if (label.equals("I/O")) {
             runtime = 1;
             //TODO: Generate interrupt
-        }
-        else if(label.equals("EXE")) {
+        } else if (label.equals("EXE")) {
             runtime = 1;
-        }
-        else{
+        } else {
             label = "EXE";
             runtime = 1;
         }
@@ -144,7 +178,7 @@ public class ProcessGenerator {
         Process[] batch;
         Process template;
         batch = new Process[n];
-        NodeList XMLProcess;
+        Node XMLProcess;
 
         XMLProcess = readXML(name);
         assert XMLProcess != null;
