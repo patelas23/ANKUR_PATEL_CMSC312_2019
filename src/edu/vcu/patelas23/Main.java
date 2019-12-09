@@ -59,7 +59,7 @@ public class Main {
         //TODO: finish CPU execution
         while(systemCycles>0) {
 //            cpu.execute();
-            System.out.println("Executed");
+//            System.out.println("Executed");
             systemCycles--;
             if (systemCycles == 1) {
                 System.out.println("CPU Status:");

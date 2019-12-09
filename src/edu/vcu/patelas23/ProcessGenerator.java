@@ -69,8 +69,7 @@ public class ProcessGenerator {
         return instruction;
     }
 
-
-    private static ArrayList<Pair<String, Integer>> getScriptC(Element e) {
+    private static ArrayList<Pair<String, Integer>> getScript(Element e) {
         ArrayList<Pair<String, Integer>> script = new ArrayList<>();
         Pair<String, Integer> instruction;
         NodeList scriptNode = e.getElementsByTagName("Script").item(0).getChildNodes();
@@ -84,8 +83,7 @@ public class ProcessGenerator {
             instructionNode = instructionNode.getNextSibling();
         }
         return script;
-    }
-
+    } //getScript()
     //Generates initial template process from XML file
     public static Process getTemplate(Node XMLProcess) {
         ArrayList<Pair<String, Integer>> stack = new ArrayList<>();
@@ -97,80 +95,34 @@ public class ProcessGenerator {
 
         //add each node within "script" to
 //        stack = getScriptC(element);
-        getScriptC(element);
+        getScript(element);
         p.setStack(stack);
 
         return p;
     }
 
-    //Generate subsequent processes from template
+    //Generate subsequent processes from template, randomizing values
     public static Process getProcess(Process p) {
-        ArrayList<Pair<String, Integer>> s;
+        ArrayList<Pair<String, Integer>> s, r;
+        Pair<String, Integer> instruction;
+        Process process = new Process();
+        int cycles;
         s = p.getStack();
+        r=new ArrayList<>();
         //randomize each value of s
         for (Pair<String, Integer> pair : s) {
-
+            cycles = pair.getValue();
+            //Randomize value to +/-50%
+            cycles = (int) (Math.random() * cycles) + (cycles/2);
+            instruction = new Pair<>(pair.getKey(), cycles);
+            r.add(instruction);
         }
-        return p;
+        process.setStack(r);
+        process.setName(p.getName());
+        process.setMemory(p.getMemory());
+
+        return process;
     }
-
-    //TODO: Finish new implementation of script loader
-    private static ArrayList<Pair<String, Integer>> getScript(Node XMLProcess) {
-        int runtime;
-        NodeList nodes;
-        nodes = XMLProcess.getChildNodes();
-        System.out.println("Instruction: " + nodes.item(0).getNodeValue());
-        //Find all nodes with either CALC, IO, or EXE
-
-        return null;
-    }
-
-    private static ArrayList<Pair<String, Integer>> getScriptB(NodeList nList) {
-        ArrayList<Pair<String, Integer>> stack = new ArrayList<>();
-        int runtime;
-        int length = nList.getLength();
-        Node child;
-        String instruction;
-
-        for (int i = 2; i < length; i++) {
-            child = nList.item(i);
-            instruction = child.getLocalName();
-
-            runtime = 1;
-
-            if (instruction.equals("CALC") || instruction.equals("I/O")) {
-                runtime = Integer.parseInt(child.getTextContent());
-            }
-            stack.add(new Pair<String, Integer>(instruction, runtime));
-        }
-        return stack;
-    }
-
-
-
-    public Pair<String, Integer> getRandomInstruction(Node n) {
-        Pair<String, Integer> instruction;
-        String label;
-        int runtime = 1;
-
-        label = n.getLocalName();
-        if (label.equals("CALC")) {
-            //Randomize runtime
-            runtime = Integer.parseInt(n.getTextContent());
-            runtime = (int) (Math.random() + 0.5 * runtime);
-        } else if (label.equals("I/O")) {
-            runtime = 1;
-            //TODO: Generate interrupt
-        } else if (label.equals("EXE")) {
-            runtime = 1;
-        } else {
-            label = "EXE";
-            runtime = 1;
-        }
-        instruction = new Pair<String, Integer>(label, runtime);
-        return instruction;
-    }
-
 
     public static Process[] generateProcesses(int n, String name) {
         Process[] batch;
@@ -186,9 +138,8 @@ public class ProcessGenerator {
         for (int i = 0; i < n; i++) {
             //create processes with randomized values
 //            batch[i] =
-
+            batch[i] = getProcess(template);
         }
-
         return batch;
     }
 

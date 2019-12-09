@@ -20,7 +20,6 @@ public class Process {
 
     private String name;
     private String[] instructions;
-//    private Pair<String, Integer>[] stack;
     private ArrayList<Pair<String, Integer>> stack;
     String state;
     private int id;
@@ -35,7 +34,7 @@ public class Process {
 
     public Process(String n, int m) {
         super();
-        name = n;
+        name = n + id;
         memory = m;
     }
 
@@ -86,4 +85,4 @@ public class Process {
 
     }
 
-}
+} //Process
