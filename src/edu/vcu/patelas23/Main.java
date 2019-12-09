@@ -52,7 +52,7 @@ public class Main {
         //and add them to scheduler
         scheduler.addBatch(ProcessGenerator.generateProcesses(numProcesses, programName));
 
-        System.out.println("Enter number number of cycles for CPU to execute before pausing:");
+        System.out.println("Enter number of cycles for CPU to execute before pausing:");
         systemCycles = s.nextInt();
 
         //execute CPU continuously

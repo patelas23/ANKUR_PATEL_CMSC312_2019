@@ -1,24 +1,45 @@
 package edu.vcu.patelas23;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class Scheduler {
+    //if quantum=0
+    ////swap process()
 
-    private Queue<Process> jobQueue;
-    private Queue<Process> readyQueue;
-    private Queue<Process> waitingQueue;
+    private Deque<Process> jobQueue;
+    private Deque<Process> readyQueue;
+    private Deque<Process> waitingQueue;
 
-    private Queue<Process> processQueue;
+    private Deque<Process> processQueue;
 
     private int quantum;
+    private Dispatcher dispatcher;
 
     public Scheduler() {
         //instantiate queues
-        jobQueue = new LinkedList<>();
-        readyQueue = new LinkedList<>();
-        waitingQueue = new LinkedList<>();
+        jobQueue = new ArrayDeque<Process>();
+        readyQueue = new ArrayDeque<Process>();
+        waitingQueue = new ArrayDeque<Process>();
+        dispatcher = new Dispatcher();
         quantum = 5;
+    }
+
+    public Process getNextProcess() {
+        //Return the next scheduled process
+        return jobQueue.getFirst();
+//        return readyQueue.peek();
+
+    }
+
+    public void getNextProcess(Process p) {
+        //add given process back to queue
+        //getNextProcess();
+    }
+
+    //add given process to corresponding waiting queue,
+    //then return next process
+    public void getNextProcess(Process p, int flag) {
+        //waitingQueue(flag).add(p)
+        //getNextProcess();
     }
 
     public void addProcess(Process p) {
@@ -41,11 +62,17 @@ public class Scheduler {
         }
     }
 
+    public void removeProcess(Process p) {
+
+    }
+
     //Update round-robin quantum on each execute() cycle
     public int getQuantum() {
         quantum--;
         return quantum;
     }
+
+    //Reset quantum when new process loads
 
     public String toString() {
         StringBuilder result = new StringBuilder();

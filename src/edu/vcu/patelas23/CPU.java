@@ -30,6 +30,7 @@ public class CPU {
         //Peek scheduler to determine next process
         if (scheduler.getQuantum() == 0) {
             //get new process
+            //dispatcher.loadProcess(Scheduler)
         } else {
             instruction = currentProcess.getNextInstruction();
             if(instruction.getKey().equals("CALC")) {
@@ -48,7 +49,6 @@ public class CPU {
             }
 
         }
-
         //increase clock
         clock++;
     }
