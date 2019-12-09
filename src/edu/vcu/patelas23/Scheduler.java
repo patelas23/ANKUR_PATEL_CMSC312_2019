@@ -20,7 +20,8 @@ public class Scheduler {
         readyQueue = new ArrayDeque<Process>();
         waitingQueue = new ArrayDeque<Process>();
         dispatcher = new Dispatcher();
-        quantum = 5;
+        //quantum should be set while a process loads
+        quantum = 0;
     }
 
     public Process getNextProcess() {

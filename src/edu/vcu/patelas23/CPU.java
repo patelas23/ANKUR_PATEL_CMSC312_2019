@@ -33,9 +33,9 @@ public class CPU {
             //dispatcher.loadProcess(Scheduler)
         } else {
             instruction = currentProcess.getNextInstruction();
+            runtime = (int) instruction.getValue();
             if(instruction.getKey().equals("CALC")) {
                 //Calculate
-                runtime = (int) instruction.getValue();
                 runtime--;
                 //partially executed calculate statement
                 partialInstruction = new Pair<String, Integer>(instruction.getKey(), runtime);
@@ -47,6 +47,8 @@ public class CPU {
             else if (instruction.getKey().equals("EXE")) {
                 //add process to exit queue
             }
+            //call to dispatcher(process)
+            //either replace process with partial instruction or keep processing this one
 
         }
         //increase clock
