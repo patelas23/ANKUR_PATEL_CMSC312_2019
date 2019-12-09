@@ -52,7 +52,7 @@ public class Main {
         //and add them to scheduler
         scheduler.addBatch(ProcessGenerator.generateProcesses(numProcesses, programName));
 
-        System.out.println("Enter number number of cycles for CPU to execute (10000 ~ 250 000):");
+        System.out.println("Enter number number of cycles for CPU to execute before pausing:");
         systemCycles = s.nextInt();
 
         //execute CPU continuously
@@ -61,14 +61,18 @@ public class Main {
 //            cpu.execute();
             System.out.println("Executed");
             systemCycles--;
+            if (systemCycles == 1) {
+                System.out.println("CPU Status:");
+                System.out.println("Enter number of cycles to continue running.");
+                System.out.println("Or enter 0 to exit.");
+            }
         }
-
         //TODO: finish toString implementation
 //        System.out.println(cpu.toString());
         System.out.println(scheduler.toString());
         //Exit
         s.close();
-    }
+    } //Main
 
     public static void listPrograms() {
         String[] names;

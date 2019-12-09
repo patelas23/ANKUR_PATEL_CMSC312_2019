@@ -65,6 +65,7 @@ public class ProcessGenerator {
             //TODO: Generate interrupt
         }
         instruction = new Pair<String, Integer>(label, runtime);
+        System.out.println(instruction);
         return instruction;
     }
 
@@ -77,9 +78,6 @@ public class ProcessGenerator {
 
         while (instructionNode.getNextSibling() != null) {
             if (instructionNode.getNodeType() == Node.ELEMENT_NODE) {
-                System.out.println("has sibling" + instructionNode.getTextContent());
-                //TODO: remove this
-//                instruction = new Pair<String, Integer>("CALC", 1);
                 instruction = getInstruction(instructionNode);
                 script.add(instruction);
             }
