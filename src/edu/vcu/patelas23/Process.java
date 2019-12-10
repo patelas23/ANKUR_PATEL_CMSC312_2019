@@ -21,6 +21,7 @@ public class Process {
     private String name;
     private String[] instructions;
     private ArrayList<Pair<String, Integer>> stack;
+    private int currentRuntime;
     String state;
     private int id;
     private int memory;
@@ -87,7 +88,9 @@ public class Process {
 
     public void fork() {
         //create new thread
-        //maintain id of parent and child
+        //maintain the id of parent and child
+        //both parent and child reference the same space in memory
+        //add the new thread to job queue
     }
 
 } //Process
