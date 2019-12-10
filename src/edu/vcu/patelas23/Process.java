@@ -25,7 +25,7 @@ public class Process {
     String state;
     private int id;
     private int memory;
-    private pcb block;
+    private pcb block = new pcb();
 
     public Process() {
         id = globalID;
@@ -37,6 +37,7 @@ public class Process {
         super();
         name = n + id;
         memory = m;
+        block.memory = m;
     }
 
     public Process(String s, String[] i, int mem) {
