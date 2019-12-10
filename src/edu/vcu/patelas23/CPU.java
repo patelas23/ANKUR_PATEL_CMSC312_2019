@@ -49,6 +49,8 @@ public class CPU {
             }
             //call to dispatcher(process)
             //either replace process with partial instruction or keep processing this one
+            //notify scheduler, checking for interrupts
+            //dispatcher loads from scheduler and checks io devices for interrupts
 
         }
         //increase clock

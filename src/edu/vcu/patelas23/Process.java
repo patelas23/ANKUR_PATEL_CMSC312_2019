@@ -85,4 +85,9 @@ public class Process {
 
     }
 
+    public void fork() {
+        //create new thread
+        //maintain id of parent and child
+    }
+
 } //Process

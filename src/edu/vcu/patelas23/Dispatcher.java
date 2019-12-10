@@ -7,7 +7,7 @@ public class Dispatcher {
         System.out.println("Dispatcher instantiated");
     }
 
-    public void loadProcess() {
+    public void loadProcess(Process p) {
         //if scheduler has not interrupted, return current process
         //otherwise, currentProcess = scheduler.swapProcess(currentProcess)
     }

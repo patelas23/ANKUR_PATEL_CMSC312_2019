@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProgramGenerator {
+
+    //TODO: Add script tag before script section
     private Scanner scan;
 
     public ProgramGenerator(Scanner scan) {
@@ -45,8 +47,8 @@ public class ProgramGenerator {
             programMem.appendChild(document.createTextNode(String.valueOf(memory)));
             root.appendChild(programMem);
 
-            //Add instructions
-            this.addInstructions(document, root);
+            //Parse instruction strings
+            addInstructions(document, root);
 
             //create xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -54,7 +56,7 @@ public class ProgramGenerator {
             DOMSource domSource = new DOMSource(document);
             StreamResult streamResult = new StreamResult(new File(filepath));
 
-            //For debugging:
+            //Command line output for debugging:
             //StreamResult result = new StreamResult(System.out);
 
             //Transform the DOM object to XML
