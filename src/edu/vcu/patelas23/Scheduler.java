@@ -4,6 +4,7 @@ import java.util.*;
 public class Scheduler {
     //if quantum=0
     ////swap process()
+    private static final int QUANTUM = 5;
 
     private Deque<Process> jobQueue;
     private Deque<Process> readyQueue;
@@ -29,10 +30,17 @@ public class Scheduler {
 
     public Process getNextProcess() {
         //Return the next scheduled process
+        //Rest time quantum as new process is being laoded
+        quantum = QUANTUM;
         return jobQueue.getFirst();
 //        return readyQueue.peek();
 
     }
+
+//    public Process swap(Process p) {
+//        jobQueue.add(p);
+//
+//    }
 
     public void getNextProcess(Process p) {
         //add given process back to queue
