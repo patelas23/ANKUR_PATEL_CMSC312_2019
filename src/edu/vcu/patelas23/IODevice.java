@@ -9,12 +9,7 @@ public class IODevice {
     private String name;
 
 
-    public IODevice(int id, Process p) {
-        switch(id) {
-            case (1):
-                name = "Keyboard";
-        }
-
+    public IODevice(Process p) {
     }
 
     public static class Keyboard {
