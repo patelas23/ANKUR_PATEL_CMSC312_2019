@@ -86,7 +86,9 @@ public class ProgramGenerator {
                     break;
                 case "IO":
                     instruction = d.createElement("IO");
-                    System.out.println("Enter approximate waiting time (CPU cycles)");
+                    System.out.println("1 - Keyboard interrupt");
+                    System.out.println();
+                    System.out.println("Enter device ID to associate with this process");
                     cycles = scan.nextInt();
                     instruction.appendChild(d.createTextNode(String.valueOf(cycles)));
                     root.appendChild(instruction);

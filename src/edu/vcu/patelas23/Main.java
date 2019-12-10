@@ -26,6 +26,7 @@ public class Main {
         int memory, numProcesses, systemCycles;
 
         Scheduler scheduler = new Scheduler();
+        cpu = new CPU();
         Scanner s = new Scanner(System.in);
         System.out.println("Programs:");
         listPrograms();
@@ -50,25 +51,29 @@ public class Main {
 
         //Generate specified number of processes based on chosen program template
         //and add them to scheduler
-        scheduler.addBatch(ProcessGenerator.generateProcesses(numProcesses, programName));
+//        scheduler.addBatch(ProcessGenerator.generateProcesses(numProcesses, programName));
 
         System.out.println("Enter number of cycles for CPU to execute before pausing:");
         systemCycles = s.nextInt();
 
+        //Add processes generated from XML file to Scheduler
+        cpu.load(ProcessGenerator.generateProcesses(numProcesses, programName));
+
         //execute CPU continuously
         //TODO: finish CPU execution
         while(systemCycles>0) {
-//            cpu.execute();
+            cpu.execute();
 //            System.out.println("Executed");
             systemCycles--;
             if (systemCycles == 1) {
                 System.out.println("CPU Status:");
+                //TODO: finish toString implementation
+//                   System.out.println(cpu.toString());
                 System.out.println("Enter number of cycles to continue running.");
                 System.out.println("Or enter 0 to exit.");
             }
         }
-        //TODO: finish toString implementation
-//        System.out.println(cpu.toString());
+
         System.out.println(scheduler.toString());
         //Exit
         s.close();

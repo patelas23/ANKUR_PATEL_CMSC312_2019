@@ -1,11 +1,16 @@
 package edu.vcu.patelas23;
 
-//Class to represent system memory, with demand paging
+//Class to represent virtual memory, with demand paging
 //Only CPU has mutator rights
 //Process either address + read request
 //or address + data and write request
 //Address space is allocated per process, shared between threads
+//each page represents one byte of memory
 public class Memory {
+    public static final int MAX_MEM = 4096;
+    public static int REMAINING_MEM = 4096;
+    //subtract process.memory from remaining memory on load
+
     public void read(int address) {
 
     }
