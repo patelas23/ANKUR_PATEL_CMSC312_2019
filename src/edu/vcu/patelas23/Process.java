@@ -57,13 +57,13 @@ public class Process {
     }
 
     public void setName(String n) {
-        this.name = n;
+        name = n;
     }
     public void setMemory(int m) {
-        this.memory = m;
+        memory = m;
     }
     public void setStack(ArrayList<Pair<String, Integer>> s) {
-        this.stack = s;
+        stack = s;
     }
 
     public Pair<String, Integer> getNextInstruction() {
@@ -79,6 +79,7 @@ public class Process {
         stack.add(partialInstruction);
     }
 
+    // I/O interrupt handlers
     public void addMaskableInterrupt() {
 
     }
@@ -88,6 +89,7 @@ public class Process {
 
     public void fork() {
         //create new thread
+        Process newThread = new Process();
         //maintain the id of parent and child
         //both parent and child reference the same space in memory
         //add the new thread to job queue

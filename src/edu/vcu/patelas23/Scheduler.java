@@ -7,6 +7,7 @@ public class Scheduler {
 
     private Deque<Process> jobQueue;
     private Deque<Process> readyQueue;
+    private Deque<Process> IOQueue;
     private Deque<Process> waitingQueue;
 
     private Deque<Process> processQueue;
@@ -18,7 +19,9 @@ public class Scheduler {
         //instantiate queues
         jobQueue = new ArrayDeque<Process>();
         readyQueue = new ArrayDeque<Process>();
+        IOQueue = new ArrayDeque<Process>();
         waitingQueue = new ArrayDeque<Process>();
+
         dispatcher = new Dispatcher();
         //quantum should be set while a process loads
         quantum = 0;
@@ -50,6 +53,10 @@ public class Scheduler {
     public void addBatch(Process[] pArray) {
         //add list of processes to queue
         jobQueue.addAll(Arrays.asList(pArray));
+    }
+
+    public void addToIO(Process p) {
+
     }
 
     private void addToReady(Process p) {

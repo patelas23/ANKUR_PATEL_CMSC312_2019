@@ -22,31 +22,40 @@ public class CPU {
 
     public void load(Process p) {
         scheduler.addProcess(p);
+        scheduler.addAllToReady();
     }
 
     public void execute() {
         Pair<String, Integer> instruction, partialInstruction;
         int runtime;
+        String command;
+        //If a new process is to be loaded, update memory
         //Peek scheduler to determine next process
         if (scheduler.getQuantum() == 0) {
             //get new process
             //dispatcher.loadProcess(Scheduler)
-        } else {
+        } else if (currentProcess.state.equals("READY")) {
             instruction = currentProcess.getNextInstruction();
             runtime = (int) instruction.getValue();
-            if(instruction.getKey().equals("CALC")) {
-                //Calculate
-                runtime--;
-                //partially executed calculate statement
-                partialInstruction = new Pair<String, Integer>(instruction.getKey(), runtime);
+            command = instruction.getKey();
+            switch (command) {
+                case ("CALC"):
+                    runtime--;
+                    partialInstruction = new Pair<String, Integer>(command, runtime);
+                    break;
+                case ("IO"):
+                    //add process to IO Event Queue
+                    scheduler.addToIO(currentProcess);
+                    break;
+                case ("EXE"):
+                    //clear this process from memory, load new process
+                    currentProcess = swap(currentProcess);
+                    //add process to exit queue?
+                    break;
+                default:
             }
-            else if (instruction.getKey().equals("I/O")) {
-                //add to waiting queue
-                //wait for I/O signal
-            }
-            else if (instruction.getKey().equals("EXE")) {
-                //add process to exit queue
-            }
+            //update clock
+
             //call to dispatcher(process)
             //either replace process with partial instruction or keep processing this one
             //notify scheduler, checking for interrupts
@@ -67,6 +76,10 @@ public class CPU {
 
     public Process getCurrentProcess() {
         return this.currentProcess;
+    }
+
+    public Process swap(Process p) {
+        
     }
 
 }
