@@ -7,9 +7,23 @@ package edu.vcu.patelas23;
 //Address space is allocated per process, shared between threads
 //each page represents one byte of memory
 public class Memory {
-    public static final int MAX_MEM = 4096;
+    public static int MAX_MEM = 4096;
     public static int REMAINING_MEM = 4096;
     //subtract process.memory from remaining memory on load
+
+    public Memory(int mem) {
+        MAX_MEM = mem;
+    }
+
+    public int load(int n) {
+        REMAINING_MEM -= n;
+        return REMAINING_MEM;
+    }
+
+    public int unload(int n) {
+        REMAINING_MEM += n;
+        return REMAINING_MEM;
+    }
 
     public void read(int address) {
 
