@@ -33,23 +33,23 @@ public class CPU {
 
     public void execute() {
         Pair<String, Integer> instruction;
-        int runtime, calculationTime;
+        int runtime;
         String command;
-        //If a new process is to be loaded, update memory
-        //Peek scheduler to determine next process
+        //If quantum has run up, or if the system is just starting
         if (scheduler.getQuantum() == 0) {
-            //get new process
             //if old process was running
             if (currentProcess.state.equals("RUN")) {
                 //Replace process into scheduler queue, with partial instruction
+                currentProcess.setLastInstruction(partialInstruction);
                 scheduler.addProcess(currentProcess);
-
-            } else {
+            } else if (currentProcess.state.equals("READY")) {
                 //if there is no process yet
+                scheduler.addToReady(currentProcess);
                 currentProcess = scheduler.getNextProcess();
             }
             currentProcess = scheduler.getNextProcess();
             memory.load(currentProcess.getMemory());
+
             //if the current process has just entered or is otherwise ready
         } else if (currentProcess.state.equals("READY")) {
             instruction = currentProcess.getNextInstruction();
@@ -79,9 +79,6 @@ public class CPU {
                     break;
                 default:
             }
-            //call to dispatcher(process)
-            //either replace process with partial instruction or keep processing this one
-            //notify scheduler, checking for interrupts
 
         } else if (currentProcess.state.equals("RUN")) {
             if (partialRuntime == 0) {
@@ -101,6 +98,14 @@ public class CPU {
             currentProcess = scheduler.getNextIO();
             currentProcess.state = "READY";
         }
+    }
+
+    public int getClock() {
+        return clock;
+    }
+
+    public Process getCurrentProcess() {
+        return currentProcess;
     }
 
 }

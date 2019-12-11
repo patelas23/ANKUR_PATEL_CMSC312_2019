@@ -10,8 +10,8 @@ import java.awt.event.KeyEvent;
 //Displays realtime information about the running state of the CPU
 //Allows user to create and load programs
 public class GUI extends JFrame {
-    public GUI() {
 
+    public GUI() {
         initUI();
     }
 
@@ -26,7 +26,8 @@ public class GUI extends JFrame {
         //instantiate quit button (for testing)
         enterButton  = new JButton("Enter");
         enterButton.addActionListener((event) -> System.exit(0));
-        enterButton.setMnemonic(KeyEvent.VK_ESCAPE);
+        enterButton.setMnemonic(KeyEvent.VK_ENTER);
+        enterButton.setVisible(false);
 
         panel.add(enterButton, BorderLayout.EAST);
 
