@@ -18,8 +18,8 @@ public class IODevice {
 
     //randomly generate true or false
     public boolean interrupt() {
-        double n = Math.random() - 0.5;
-        if(n<0) {
+        double n = Math.random() * 10;
+        if(n<5) {
             return false;
         }
         else {

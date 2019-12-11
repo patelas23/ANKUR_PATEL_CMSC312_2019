@@ -36,10 +36,20 @@ public class Scheduler {
         //Rest time quantum as new process is being laoded
         Process nextProcess;
         quantum = QUANTUM;
-        nextProcess = readyQueue.removeFirst();
         if(readyQueue.isEmpty()) {
             return null;
         }
+        nextProcess = readyQueue.removeFirst();
+        return nextProcess;
+    }
+
+    public Process getNextIO() {
+        Process nextProcess;
+        if(IOQueue.isEmpty()) {
+            return null;
+        }
+        nextProcess = IOQueue.removeFirst();
+        nextProcess.state = "READY";
         return nextProcess;
     }
 
@@ -47,16 +57,16 @@ public class Scheduler {
         return (readyQueue.isEmpty());
     }
 
-    public void getNextProcess(Process p) {
-        //add given process back to queue
-        //getNextProcess();
+    public boolean IOQueueEmpty() {
+        return IOQueue.isEmpty();
     }
 
-    //add given process to corresponding waiting queue,
-    //then return next process
-    public void getNextProcess(Process p, int flag) {
-        //waitingQueue(flag).add(p)
-        //getNextProcess();
+    public Deque<Process> getReadyQueue() {
+        return readyQueue;
+    }
+
+    public Deque<Process> getIOQueue() {
+        return IOQueue;
     }
 
     public void addProcess(Process p) {
@@ -72,14 +82,6 @@ public class Scheduler {
         p.state = "WAIT";
         readyQueue.remove(p);
         IOQueue.add(p);
-    }
-
-    public Process getNextIO() {
-        if (IOQueue.isEmpty()) {
-            IOQueue.add(generateQuitter());
-//            return new Process
-        }
-        return IOQueue.removeFirst();
     }
 
     private Process generateQuitter() {

@@ -62,7 +62,6 @@ public class ProcessGenerator {
             runtime = Integer.parseInt(n.getTextContent());
         } else if (label.equals("I/O")) {
             runtime = 1;
-            //TODO: Generate interrupt
         }
         instruction = new Pair<String, Integer>(label, runtime);
         return instruction;
@@ -107,7 +106,7 @@ public class ProcessGenerator {
         Process process = new Process();
         int cycles;
         s = p.getStack();
-        r=new ArrayList<>();
+        r=new ArrayList<Pair<String, Integer>>();
         //randomize each value of s
         for (Pair<String, Integer> pair : s) {
             cycles = pair.getValue();

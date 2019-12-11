@@ -46,12 +46,13 @@ public class CPU {
                 scheduler.addToReady(currentProcess);
                 currentProcess = scheduler.getNextProcess();
             }
-            currentProcess = scheduler.getNextProcess();
-            memory.load(currentProcess.getMemory());
+//            currentProcess = scheduler.getNextProcess();
+//            memory.load(currentProcess.getMemory());
 
             //if the current process has just entered or is otherwise ready
         } else if (currentProcess.state == null) {
             currentProcess = scheduler.getNextProcess();
+            //if the current process is ready to process another instruction
         } else if (currentProcess.state.equals("READY")) {
             instruction = currentProcess.getNextInstruction();
             runtime = (int) instruction.getValue();
@@ -101,11 +102,13 @@ public class CPU {
         //check scheduler and IO devices for interrupts
         //if an interrupt has been generated,
         ////find the process associated, load it and mark it ready again
-        if (interruptHandler.hasInterrupt()) {
+        if (interruptHandler.hasInterrupt() && !scheduler.IOQueueEmpty()) {
             scheduler.addToReady(currentProcess);
             //get first process from IO waiting queue
             currentProcess = scheduler.getNextIO();
-            currentProcess.state = "READY";
+            if(currentProcess != null) {
+                currentProcess.state = "READY";
+            }
         }
     }
 
@@ -126,6 +129,26 @@ public class CPU {
 
     public Process getCurrentProcess() {
         return currentProcess;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if(currentProcess != null) {
+            sb.append(currentProcess.getName());
+            sb.append("\n");
+            sb.append(currentProcess.getMemory());
+            sb.append("\n");
+        }
+        sb.append("Scheduler Status:");
+        sb.append("\n");
+        sb.append("Scheduler Ready Queue:");
+        sb.append(scheduler.getReadyQueue());
+        sb.append("\n");
+        sb.append("Scheduler IO Queue:");
+        sb.append(scheduler.getIOQueue());
+
+
+        return sb.toString();
     }
 
 }
