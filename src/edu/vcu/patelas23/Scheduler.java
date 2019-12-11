@@ -1,4 +1,7 @@
 package edu.vcu.patelas23;
+
+import javafx.util.Pair;
+
 import java.util.*;
 
 public class Scheduler {
@@ -58,7 +61,21 @@ public class Scheduler {
     }
 
     public void addToIO(Process p) {
+        IOQueue.add(p);
+    }
 
+    public Process getNextIO() {
+        Process quitter;
+        ArrayList stack;
+        if (IOQueue.isEmpty()) {
+            quitter = new Process();
+            stack = new ArrayList<Pair<String, Integer>>();
+            stack.add(new Pair<>("EXE", 1));
+            quitter.setStack(stack);
+            return quitter;
+//            return new Process
+        }
+        return IOQueue.removeFirst();
     }
 
     public void addToReady(Process p) {
@@ -67,7 +84,7 @@ public class Scheduler {
     }
 
     public void addAllToReady() {
-        for (Process process:jobQueue) {
+        for (Process process : jobQueue) {
             addToReady(process);
         }
     }
@@ -84,7 +101,7 @@ public class Scheduler {
 
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (Process p: readyQueue) {
+        for (Process p : readyQueue) {
             result.append(p.getName());
             result.append("\n");
             result.append(p.getMemory());

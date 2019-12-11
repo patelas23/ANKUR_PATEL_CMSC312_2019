@@ -4,6 +4,7 @@ import javafx.util.Pair;
 
 public class CPU {
     private int clock;
+    private InterruptHandler interruptHandler;
     private Scheduler scheduler;
     private Process currentProcess = new Process();
     private Memory memory;
@@ -89,8 +90,6 @@ public class CPU {
                 partialRuntime--;
             }
         }
-
-
         //increase clock
         clock++;
         //check scheduler and IO devices for interrupts
@@ -98,21 +97,10 @@ public class CPU {
         ////find the process associated, load it and mark it ready again
         if (interruptHandler.hasInterrupt()) {
             scheduler.addToReady(currentProcess);
-            currentProcess = interruptHandler.getNextProcess();
+            //get first process from IO waiting queue
+            currentProcess = scheduler.getNextIO();
             currentProcess.state = "READY";
         }
-    }
-
-    public int getClock() {
-        return clock;
-    }
-
-    public void setCurrentProcess(Process p) {
-        this.currentProcess = p;
-    }
-
-    public Process getCurrentProcess() {
-        return this.currentProcess;
     }
 
 }

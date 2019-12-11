@@ -12,9 +12,19 @@ public class IODevice {
     public IODevice(Process p) {
     }
 
-    public static class Keyboard {
-        public Keyboard() {
+    public IODevice(String s) {
+        name = s;
+    }
 
+    //randomly generate true or false
+    public boolean interrupt() {
+        double n = Math.random() - 0.5;
+        if(n<0) {
+            return false;
+        }
+        else {
+            return true;
         }
     }
+
 }
