@@ -34,12 +34,17 @@ public class Scheduler {
     public Process getNextProcess() {
         //Return the next scheduled process
         //Rest time quantum as new process is being laoded
+        Process nextProcess;
         quantum = QUANTUM;
-        readyQueue.removeFirst();
+        nextProcess = readyQueue.removeFirst();
         if(readyQueue.isEmpty()) {
-
+            return null;
         }
-        return readyQueue.getFirst();
+        return nextProcess;
+    }
+
+    public boolean isEmpty() {
+        return (readyQueue.isEmpty());
     }
 
     public void getNextProcess(Process p) {
@@ -65,6 +70,7 @@ public class Scheduler {
 
     public void addToIO(Process p) {
         p.state = "WAIT";
+        readyQueue.remove(p);
         IOQueue.add(p);
     }
 

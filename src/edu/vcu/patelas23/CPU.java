@@ -27,12 +27,10 @@ public class CPU {
         scheduler.addAllToReady();
     }
 
-    public void load(Process p) {
-        scheduler.addProcess(p);
-        scheduler.addAllToReady();
-    }
-
     public void execute() {
+        if(scheduler.isEmpty()) {
+            return;
+        }
         Pair<String, Integer> instruction;
         int runtime;
         String command;
@@ -52,10 +50,9 @@ public class CPU {
             memory.load(currentProcess.getMemory());
 
             //if the current process has just entered or is otherwise ready
-        } else if (currentProcess.state == null){
+        } else if (currentProcess.state == null) {
             currentProcess = scheduler.getNextProcess();
-        }
-        else if (currentProcess.state.equals("READY")) {
+        } else if (currentProcess.state.equals("READY")) {
             instruction = currentProcess.getNextInstruction();
             runtime = (int) instruction.getValue();
             command = instruction.getKey();
@@ -78,8 +75,10 @@ public class CPU {
                     //clear this process from memory, load new process
                     memory.unload(currentProcess.getMemory());
                     currentProcess = scheduler.getNextProcess();
+                    if(currentProcess == null) {
+                        return;
+                    }
                     memory.load(currentProcess.getMemory());
-                    //add process to exit queue?
                     break;
                 default:
             }
@@ -92,6 +91,12 @@ public class CPU {
             }
         }
         //increase clock
+        try {
+            Thread.sleep(100);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         clock++;
         //check scheduler and IO devices for interrupts
         //if an interrupt has been generated,
@@ -106,6 +111,17 @@ public class CPU {
 
     public int getClock() {
         return clock;
+    }
+
+    private void loadProcess(Process p) {
+        //if memory is insufficient
+        int loaded = memory.load(p.getMemory());
+        if (loaded < 0) {
+            memory.unload(p.getMemory());
+            scheduler.addToIO(p);
+        } else {
+
+        }
     }
 
     public Process getCurrentProcess() {
