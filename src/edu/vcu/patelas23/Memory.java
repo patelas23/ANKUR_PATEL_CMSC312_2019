@@ -11,6 +11,9 @@ public class Memory {
     public static int REMAINING_MEM = 4096;
     //subtract process.memory from remaining memory on load
 
+    public Memory() {
+
+    }
     public Memory(int mem) {
         MAX_MEM = mem;
     }

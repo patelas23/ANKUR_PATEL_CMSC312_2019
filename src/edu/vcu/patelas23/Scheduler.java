@@ -32,18 +32,9 @@ public class Scheduler {
         //Return the next scheduled process
         //Rest time quantum as new process is being laoded
         quantum = QUANTUM;
-        if (quantum > 0) {
-            return readyQueue.getFirst();
-        } else {
-            readyQueue.removeFirst();
-            return readyQueue.getFirst();
-        }
+        readyQueue.removeFirst();
+        return readyQueue.getFirst();
     }
-
-//    public Process swap(Process p) {
-//        jobQueue.add(p);
-//
-//    }
 
     public void getNextProcess(Process p) {
         //add given process back to queue
@@ -70,7 +61,7 @@ public class Scheduler {
 
     }
 
-    private void addToReady(Process p) {
+    public void addToReady(Process p) {
         p.state = "READY";
         readyQueue.add(p);
     }
@@ -90,8 +81,6 @@ public class Scheduler {
         quantum--;
         return quantum;
     }
-
-    //Reset quantum when new process loads
 
     public String toString() {
         StringBuilder result = new StringBuilder();

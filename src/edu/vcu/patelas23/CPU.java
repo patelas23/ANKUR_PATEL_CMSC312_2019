@@ -5,11 +5,16 @@ import javafx.util.Pair;
 public class CPU {
     private int clock;
     private Scheduler scheduler;
-    private Process currentProcess;
+    private Process currentProcess = new Process();
+    private Memory memory;
+
+    private Pair<String, Integer> partialInstruction;
+    private int partialRuntime;
 
     public CPU() {
         clock = 0;
         scheduler = new Scheduler();
+        memory = new Memory();
     }
 
     public void load(Process[] pArray) {
@@ -26,14 +31,25 @@ public class CPU {
     }
 
     public void execute() {
-        Pair<String, Integer> instruction, partialInstruction;
-        int runtime;
+        Pair<String, Integer> instruction;
+        int runtime, calculationTime;
         String command;
         //If a new process is to be loaded, update memory
         //Peek scheduler to determine next process
         if (scheduler.getQuantum() == 0) {
             //get new process
-            //dispatcher.loadProcess(Scheduler)
+            //if old process was running
+            if (currentProcess.state.equals("RUN")) {
+                //Replace process into scheduler queue, with partial instruction
+                scheduler.addProcess(currentProcess);
+
+            } else {
+                //if there is no process yet
+                currentProcess = scheduler.getNextProcess();
+            }
+            currentProcess = scheduler.getNextProcess();
+            memory.load(currentProcess.getMemory());
+            //if the current process has just entered or is otherwise ready
         } else if (currentProcess.state.equals("READY")) {
             instruction = currentProcess.getNextInstruction();
             runtime = (int) instruction.getValue();
@@ -42,6 +58,12 @@ public class CPU {
                 case ("CALC"):
                     runtime--;
                     partialInstruction = new Pair<String, Integer>(command, runtime);
+                    partialRuntime = runtime;
+                    currentProcess.state = "RUN";
+                    if (runtime == 0) {
+                        instruction = currentProcess.getNextInstruction();
+                        partialRuntime = (int) instruction.getValue();
+                    }
                     break;
                 case ("IO"):
                     //add process to IO Event Queue
@@ -49,21 +71,36 @@ public class CPU {
                     break;
                 case ("EXE"):
                     //clear this process from memory, load new process
-                    currentProcess = swap(currentProcess);
+                    memory.unload(currentProcess.getMemory());
+                    currentProcess = scheduler.getNextProcess();
+                    memory.load(currentProcess.getMemory());
                     //add process to exit queue?
                     break;
                 default:
             }
-            //update clock
-
             //call to dispatcher(process)
             //either replace process with partial instruction or keep processing this one
             //notify scheduler, checking for interrupts
-            //dispatcher loads from scheduler and checks io devices for interrupts
 
+        } else if (currentProcess.state.equals("RUN")) {
+            if (partialRuntime == 0) {
+                currentProcess.state = "READY";
+            } else {
+                partialRuntime--;
+            }
         }
+
+
         //increase clock
         clock++;
+        //check scheduler and IO devices for interrupts
+        //if an interrupt has been generated,
+        ////find the process associated, load it and mark it ready again
+        if (interruptHandler.hasInterrupt()) {
+            scheduler.addToReady(currentProcess);
+            currentProcess = interruptHandler.getNextProcess();
+            currentProcess.state = "READY";
+        }
     }
 
     public int getClock() {
@@ -76,10 +113,6 @@ public class CPU {
 
     public Process getCurrentProcess() {
         return this.currentProcess;
-    }
-
-    public Process swap(Process p) {
-        
     }
 
 }

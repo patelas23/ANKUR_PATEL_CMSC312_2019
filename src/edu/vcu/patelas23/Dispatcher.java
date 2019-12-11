@@ -1,5 +1,7 @@
 package edu.vcu.patelas23;
 
+//CLass to directly give control of CPU to processes,
+//assigning them as the scheduler sees fit
 public class Dispatcher {
     private Process currentProcess, newProcess;
 
