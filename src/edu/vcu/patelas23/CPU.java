@@ -16,6 +16,7 @@ public class CPU {
         clock = 0;
         scheduler = new Scheduler();
         memory = new Memory();
+        interruptHandler = new InterruptHandler();
     }
 
     public void load(Process[] pArray) {
@@ -51,7 +52,10 @@ public class CPU {
             memory.load(currentProcess.getMemory());
 
             //if the current process has just entered or is otherwise ready
-        } else if (currentProcess.state.equals("READY")) {
+        } else if (currentProcess.state == null){
+            currentProcess = scheduler.getNextProcess();
+        }
+        else if (currentProcess.state.equals("READY")) {
             instruction = currentProcess.getNextInstruction();
             runtime = (int) instruction.getValue();
             command = instruction.getKey();

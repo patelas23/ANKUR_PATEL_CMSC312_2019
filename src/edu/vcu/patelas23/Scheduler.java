@@ -36,6 +36,9 @@ public class Scheduler {
         //Rest time quantum as new process is being laoded
         quantum = QUANTUM;
         readyQueue.removeFirst();
+        if(readyQueue.isEmpty()) {
+
+        }
         return readyQueue.getFirst();
     }
 
@@ -61,21 +64,28 @@ public class Scheduler {
     }
 
     public void addToIO(Process p) {
+        p.state = "WAIT";
         IOQueue.add(p);
     }
 
     public Process getNextIO() {
-        Process quitter;
-        ArrayList stack;
         if (IOQueue.isEmpty()) {
-            quitter = new Process();
-            stack = new ArrayList<Pair<String, Integer>>();
-            stack.add(new Pair<>("EXE", 1));
-            quitter.setStack(stack);
-            return quitter;
+            IOQueue.add(generateQuitter());
 //            return new Process
         }
         return IOQueue.removeFirst();
+    }
+
+    private Process generateQuitter() {
+        Process quitter;
+        ArrayList<Pair<String, Integer>> stack;
+
+        quitter = new Process();
+        stack = new ArrayList<Pair<String, Integer>>();
+        stack.add(new Pair<>("EXE", 1));
+        quitter.setStack(stack);
+
+        return quitter;
     }
 
     public void addToReady(Process p) {

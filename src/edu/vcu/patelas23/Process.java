@@ -69,6 +69,9 @@ public class Process {
 
     public Pair<String, Integer> getNextInstruction() {
         block.pc++;
+        if(block.pc >= stack.size()) {
+            return new Pair<String, Integer>("EXE", 1);
+        }
         return stack.get(block.pc);
     }
     public int getMemory() {

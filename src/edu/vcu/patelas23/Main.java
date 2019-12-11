@@ -64,6 +64,7 @@ public class Main {
         while(systemCycles>0) {
             cpu.execute();
 //            System.out.println("Executed");
+            //update process table
             systemCycles--;
             if (systemCycles == 1) {
                 System.out.println("CPU Status:");
