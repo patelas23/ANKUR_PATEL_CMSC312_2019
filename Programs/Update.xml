@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Program>
+    <Name>File Explorer</Name>
+    <Memory>200</Memory>
+    <Script>
+        <IO>5</IO>
+        <CALC>20</CALC>
+        <CALC>30</CALC>
+        <CALC>60</CALC>
+        <IO>30</IO>
+        <CALC>15</CALC>
+        <IO>5</IO>
+        <CALC>40</CALC>
+        <CALC>35</CALC>
+        <IO>15</IO>
+        <CALC>50</CALC>
+        <EXE/>
+    </Script>
+</Program>

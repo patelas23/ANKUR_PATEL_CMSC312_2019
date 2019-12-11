@@ -65,7 +65,6 @@ public class ProcessGenerator {
             //TODO: Generate interrupt
         }
         instruction = new Pair<String, Integer>(label, runtime);
-        System.out.println(instruction);
         return instruction;
     }
 

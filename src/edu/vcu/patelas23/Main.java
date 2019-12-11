@@ -70,8 +70,10 @@ public class Main {
                 System.out.println("CPU Status:");
                 //TODO: finish toString implementation
 //                   System.out.println(cpu.toString());
+                //
                 System.out.println("Enter number of cycles to continue running.");
                 System.out.println("Or enter 0 to exit.");
+                systemCycles = s.nextInt();
             }
         }
 
