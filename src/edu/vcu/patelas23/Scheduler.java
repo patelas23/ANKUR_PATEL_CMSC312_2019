@@ -32,9 +32,12 @@ public class Scheduler {
         //Return the next scheduled process
         //Rest time quantum as new process is being laoded
         quantum = QUANTUM;
-        return jobQueue.getFirst();
-//        return readyQueue.peek();
-
+        if (quantum > 0) {
+            return readyQueue.getFirst();
+        } else {
+            readyQueue.removeFirst();
+            return readyQueue.getFirst();
+        }
     }
 
 //    public Process swap(Process p) {
